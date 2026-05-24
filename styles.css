@@ -1,694 +1,248 @@
+/* ===================================
+   CSS 変数（デザイントークン）
+   色・フォント・間隔などはここで一元管理。
+   変更するときはこのブロックだけ編集すればOK。
+=================================== */
+:root {
+  --color-primary:    #000;
+  --color-secondary:  #fff;
+  --color-accent:     #333;
+  --color-muted:      #666;
+  --color-light:      #eee;
+  --font-primary:     "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue",
+                      Helvetica, Arial, sans-serif, system-ui;
+  --transition-speed: 0.3s;
+  --border-radius:    25px;
+  --spacing-xs:  10px;
+  --spacing-sm:  20px;
+  --spacing-md:  30px;
+  --spacing-lg:  50px;
+  --spacing-xl:  100px;
+}
+
+/* ===================================
+   ベーススタイル
+=================================== */
 body {
-    margin: 0;
-    place-items: center;
-    min-height: 100vh;
-    font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue",
-      Helvetica, Arial, sans-serif, system-ui;
-    overflow-x: hidden;
-  }
-  
-  section {
-    width: 100vw;
-  }
-  
-  section:nth-of-type(1),
-  section:nth-of-type(3) {
-    background: hsl(0 0% 100%);
-  }
-  
-  h2 {
-    font-size: clamp(2rem, 3vw + 1rem, 8rem);
-  }
-  
-  .section__content {
-    min-height: 100vh;
-    width: 100vw;
-    display: grid;
-    place-items: center;
-    position: sticky;
-    top: 0;
-    overflow: hidden;
-  }
-  
-  section:nth-of-type(1),
-  section:nth-of-type(3) {
-    color: hsl(0 0% 0%);
-  }
-  section:nth-of-type(1) .section__content {
-    overflow: hidden;
-  }
-  
-  section:nth-of-type(2) {
-    z-index: 2;
-    color: hsl(0 0% 0%);
-    min-height: 100vh;
-    background: hsl(0 0% 0%);
-  }
-  
-  section:nth-of-type(2) p {
-    --opacity: 1;
-    color: hsl(0 0% 100%);
-    font-size: 70px;
-    letter-spacing: 0;
-    font-weight: bold;
-    line-height: 1;
-    width: 30ch;
-    max-width: calc(100% - 4rem);
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    text-align: center;
-  }
-  
-  section:nth-of-type(1) svg {
-    --opacity: 1;
-    font-weight: 600;
-    font-size: clamp(2rem, 10vw + 1rem, 10rem);
-    transform-origin: 50% 50%;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    opacity: 0.4;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-  }
-  
-  section:nth-of-type(3) {
-    z-index: 4;
-  }
-  
-  section:nth-of-type(3) h2 {
-    padding-top: 30px;
-    margin: 0;
-  }
-  section:nth-of-type(3) h2 span {
-    text-transform: uppercase;
-    font-size: 0.875rem;
-  }
-  
-  section:nth-of-type(3) svg {
-    width: 30vmin;
-    position: fixed;
-    stroke: hsl(0 0% 0%);
-    right: 10%;
-    bottom: 10%;
-    rotate: 10deg;
-  }
-  
-  section:nth-of-type(1) .section__content {
-    overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 100vh;
-  }
-  
-  svg text {
-    font-size: clamp(2rem, 6vw + 1rem, 6rem);
-    font-weight: 600;
-  }
-  
-  section:nth-of-type(1) {
-    height: 200vh;
-  }
-  
-  .signature path {
-    --draw: 1.025;
-    --end: 1.025;
-    stroke-dasharray: var(--end);
-    stroke-dashoffset: var(--draw);
-  }
-  
-  .signature :is(.eye, .nose) {
-    fill: transparent;
-  }
-  
-  @supports (animation-timeline: scroll()) {
-    section {
-      view-timeline-name: --section;
-    }
-  
-    section:nth-of-type(1) svg {
-      transform: unset;
-      translate: -50% -50%;
-      animation: blow-out both ease-in, fade-in both ease-in;
-      animation-timeline: --section;
-      animation-range: exit-crossing 10% exit 0%,
-        exit-crossing 10% exit-crossing 25%;
-    }
-    section:nth-of-type(2) p {
-      animation: fade-in both linear, fade-out both linear;
-      animation-timeline: --section;
-      animation-range: entry 10% entry 35%, exit 0% exit 25%;
-    }
-    .video-wrap {
-      animation: fade-in both linear, fade-out both linear;
-      animation-timeline: --section;
-      animation-range: entry 0% entry 25%, exit 10% exit 35%;
-  
-      /*     animation: fade 2 both linear alternate-reverse;
-      animation-timeline: --section;
-      animation-range: entry 0% entry 25%, exit 10% exit 35%; */
-    }
-    .video-wrap::after {
-      opacity: 0;
-    }
-  
-    .signature path {
-      animation: draw both linear;
-      animation-timeline: --section;
-      animation-range: entry 50% entry 80%;
-    }
-    .signature :is(.eye, .nose) {
-      animation: draw both linear, fill both linear;
-      animation-timeline: --section;
-    }
-    .signature :is(.ear, .eye) {
-      animation-range: entry 80% entry 90%;
-    }
-    .signature .nose {
-      animation-range: entry 90% entry 100%;
-    }
-    @keyframes fade {
-      to {
-        opacity: 0;
-      }
-    }
-    @keyframes fade-in {
-      to {
-        opacity: var(--opacity, 0.2);
-      }
-    }
-    @keyframes fade-out {
-      to {
-        opacity: 0;
-      }
-    }
-    @keyframes draw {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-    @keyframes fill {
-      to {
-        fill: currentColor;
-      }
-    }
-    @keyframes blow-out {
-      0%,
-      95% {
-        background: transparent;
-      }
-      to {
-        transform: translateZ(99vh);
-        background: black;
-      }
-    }
-  }
-  
-  .main-contents {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .self-introduction {
-    background-color: #000;
-    padding: 10% 0;
-    padding-left: 100px;
-  }
-  
-  .self-box {
-    display: flex;
-    background-color: #000;
-    padding: 50px;
-  }
-  
-  .self-box img {
-    width: 500px;
-    height: auto;
-    border-radius: 25px;
-    filter: grayscale(100%);
-  }
-  
-  .self-text {
-    color: #fff;
-    display: block;
-    padding-left: 50px;
-    padding-top: 10%;
-  }
+  margin: 0;
+  place-items: center;
+  min-height: 100vh;
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+}
 
+section {
+  width: 100vw;
+  position: relative;
+}
 
-  
-  .self-text h2 {
-    font-size: 50px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .self-introduction {
-      padding-left: 0;
-      padding: 5% 0;
-    }
-  
-    .self-box {
-      flex-direction: column;
-      padding: 0;
-    }
-  
-    .self-box img {
-      width: 100%;
-      height: auto;
-    }
-  
-    .self-text {
-      padding-left: 0;
-      padding-top: 20px;
-      text-align: center;
-    }
-  
-    .self-text h2 {
-      font-size: 30px;
-    }
-  
-    .self-text p {
-      font-size: 16px;
-      word-break: break-all;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    section:nth-of-type(2) p {
-      writing-mode: vertical-rl;
-      text-orientation: upright;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-120%, -50%);
-      font-size: 1.2rem;
-      line-height: 1.5;
-      height: auto;
-      width: auto;
-      text-align: center;
-      white-space: nowrap;
-      font-size: 40px;
-    }
-  }
-  
-  .grid-title {
-    text-align: center;
-    font-size: 48px;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    color: #333; /* テキストの色を設定 */
-  }
-  
-  
-  .grid-container {
-    display: flex;
-    gap: 30px;
-    padding: 50px 70px;
-    overflow-x: auto; /* 横スクロールを有効化 */
-    white-space: nowrap; /* コンテンツを一行に表示 */
-    transition: transform 0.3 ease, box-shadow 0.3 ease;
-  }
-  
-  
-  @media (max-width: 480px) {
-    .grid-container {
-      grid-template-columns: 1fr; /* スマホサイズでは1列 */
-    }
-  }
-  
-  .grid-container {
-    display: flex;
-    gap: 30px;
-    padding: 50px 70px 50px 10%;
-    overflow-x: auto; /* 横スクロールを有効化 */
-    white-space: nowrap; /* コンテンツを一行に表示 */
-    scrollbar-width: none; /* Firefox向け */
-    -ms-overflow-style: none; /* Internet Explorer/Edge向け */
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-  }
-  
-  .grid-container::-webkit-scrollbar {
-    display: none; /* Webkit系ブラウザ向け（Chrome, Safari等） */
-  }
-  
-  .grid-item {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 25px;
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    border: 1px solid #eee;
-    min-width: 350px;
-    min-height: 300px;
-    flex-shrink: 0;
-  }
-  
-
-  
-      
-  .grid-item:hover, 
-  .grid-item:focus {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  
-  .grid-item img {
-    max-width: 400px;
-    height: 230px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  .grid-item h3 {
-    font-size: 28px;
-    color: #333;
-    text-align: left;
-    margin-top: 20px;
-  }
-
-  .grid-container a {
-    text-decoration: none; /* リンクの下線を消す */
-    color: inherit; /* テキストの色を継承する */
-    flex-direction: column;
-    max-width: 400px; /* 最大幅 */
-    height: auto; /* カード全体の高さを固定 */
-    white-space: normal; /* 折り返しOK */
-    overflow: hidden;
+h2 {
+  font-size: clamp(2rem, 3vw + 1rem, 8rem);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.3 ease;
+  transition: all var(--transition-speed) ease;
 }
 
-  
-  .meta-info {
-    display: flex;
-    justify-content: flex-start; /* 左寄せ */
-    gap: 10px; /* タグ、縦線、曜日の間に少しスペースを追加 */
-    margin: 50px 0 0 0;
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .meta-info .separator {
-    color: #ccc; /* 縦線の色を設定 */
-  }
-  
-  .meta-info .weekday {
-    font-weight: bold;
-  }
-  
-  .meta-info .tag {
-    padding: 2px 6px;
-    border-radius: 12px;
-    font-size: 14px;
-    color: #666;
-    font-weight: bold;
-  }
-
-  .footer {
-    text-align: center;
-    color: #000;
-  }
-
-  
-  .scroll-right {
-    position: absolute;
-    right: 20px; /* Adjust as needed */
-    top: 285px;
-    transform: translateY(-50%);
-    background-color: #ddd;
-    color: #fff;
-    border: none;
-    width: 55px;  
-    height: 55px; 
-    border-radius: 50%; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0.5;
-    z-index: 10; /* 必要に応じて値を調整 */
-  }
-  
-  .scroll-right img {
-    width: 70%; 
-    height: 70%; 
-  }
-  
-  .scroll-right:hover {
-    background-color: #888;
-  }  
-
-  .scroll-left {
-    position: absolute;
-    left: 20px; /* 左側に配置 */
-    top: 285px;
-    transform: translateY(-50%);
-    background-color: #ddd;
-    color: #fff;
-    border: none;
-    width: 55px;  
-    height: 55px; 
-    border-radius: 50%; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0.5;
-    z-index: 10;
-  }
-  
-  .scroll-left img {
-    width: 70%; 
-    height: 70%; 
-  }
-  
-  .scroll-left:hover {
-    background-color: #888;
-  }
-  
-  
-  section {
-    position: relative;
-  }
-  
-  .grid-all {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 縦方向の中央揃え */
-    height: 100%; /* grid-item 全体を高さに合わせる */
-  }
-
-  .grid-all h4 {
-    font-size: 28px;
-  }
-
-  
-  .scroll-right {
-    transform: scale(1); /* 初期状態は通常サイズ */
-    transition: transform 0.3s ease; /* 拡大縮小のアニメーション */
-  }
-
-
-  .section2 {
-    min-height: 70vh;
-  }
-
-
-  .display-none{
-    display:none;
-   }
-
-  @media screen and (max-width: 480px) {
-
-    svg text {
-      font-size: 55px;
-    }
-
-    .scroll-left,
-    .scroll-right {
-      display: none;
-    }
-
-    .grid-item {
-      min-width: 250px; /* お好みの幅に調整してください */
-      box-shadow: 0 0 8px #eee;
-      border: none;
-    }
-
-    .grid-container {
-      padding: 20px 70px 50px 10%;
-      gap: 20px;
-    }
-
-
-
-    .grid-item h3 {
-      font-size: 21px;
-    }
-
-    .self-text p {
-      text-align:left;
-      padding: 0 40px;
-      font-size: 15px;
-      font-weight: normal;
-    }
-
-    .self-box img {
-      border-radius: 0;
-    }
-
-    .self-text h2 {
-      font-size: 50px;
-    }
-
-    .footer  {
-      font-size: 10px;
-    }
-
-    .display-none{
-      display: block;
-      margin-bottom: 0;
-     }
-
-     section:nth-of-type(3) h2 {
-      padding-top: 0;
-      text-align: left;
-      padding: 0 0 0 40px;
-     }
-     .grid-item img {
-      max-width: 100%;
-      height: 150px;
-      border-radius: 10px;
-     }
-     .grid-container a {
-      max-width: 100%; /* 最大幅を100%に設定 */
-      height: auto; /* 高さは150pxに固定 */
-      white-space: normal; /* 折り返しを許可 */
-     }
-
-  }
-
-  .rss-section {
-    background-color: #eee;
-    padding-top: 8px;
-  }
-
-    
-
-
-
-  .rss-date {
-    font-size: 14px;
-    color: #666;
-    text-align: left;
-    margin-top: 5px;
+/* セクション 1・2 共通のフルスクリーン中央揃えコンテナ */
+.section__content {
+  min-height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
 }
 
-  /* フッター */
-  .site-footer {
-    color: #000;
-    text-align: center;
-    position: relative;
-  }
-
-    /* コンタクトセクション */
-    .contact-section {
-      padding: var(--spacing-xl) 0;
-      background-color: var(--color-secondary);
-    }
-    
-    .contact-container {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 var(--spacing-md);
-    }
-    
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-md);
-    }
-    
-    .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: var(--color-primary);
-      transition: transform var(--transition-speed) ease;
-    }
-    
-    .social-links svg {
-      fill: #fff;
-      width: 24px;
-      height: 24px;
-    }
-    
-    .social-links a:hover,
-    .social-links a:focus {
-      transform: scale(1.1);
-    }
-    
-
-    /* 基本スタイル */
-:root {
-  --color-primary: #000;
-  --color-secondary: #fff;
-  --color-accent: #333;
-  --color-muted: #666;
-  --color-light: #eee;
-  --font-primary: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui;
-  --transition-speed: 0.3s;
-  --border-radius: 25px;
-  --spacing-xs: 10px;
-  --spacing-sm: 20px;
-  --spacing-md: 30px;
-  --spacing-lg: 50px;
-  --spacing-xl: 100px;
+/* ===================================
+   Section 1 — Hero（「Haruto Miyai」SVG テキスト）
+   height: 200vh でスクロールアニメーション用の余白を確保
+=================================== */
+section:nth-of-type(1) {
+  height: 200vh;
+  background: hsl(0 0% 100%);
+  color: hsl(0 0% 0%);
 }
 
+/* Section 1 のみ 3D パースペクティブを追加（blow-out アニメーション用） */
+section:nth-of-type(1) .section__content {
+  transform-style: preserve-3d;
+  perspective: 100vh;
+}
 
+section:nth-of-type(1) svg {
+  --opacity: 1;
+  font-weight: 600;
+  font-size: clamp(2rem, 10vw + 1rem, 10rem);
+  transform-origin: 50% 50%;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+svg text {
+  font-size: clamp(2rem, 6vw + 1rem, 6rem);
+  font-weight: 600;
+}
+
+/* ===================================
+   Section 2 — タグライン（「私のデザインは常に変化し続ける。」）
+=================================== */
+section:nth-of-type(2) {
+  z-index: 2;
+  color: hsl(0 0% 0%);
+  min-height: 100vh;
+  background: hsl(0 0% 0%);
+}
 
 section:nth-of-type(2) p {
+  --opacity: 1;
+  color: hsl(0 0% 100%);
+  font-size: 70px;
+  letter-spacing: 0;
+  font-weight: bold;
+  line-height: 1;
+  width: 30ch;
+  max-width: calc(100% - 4rem);
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  text-align: center;
   user-select: none;
   pointer-events: none;
 }
 
+/* ===================================
+   Section 3 — 自己紹介プロフィール
+=================================== */
+section:nth-of-type(3) {
+  z-index: 4;
+  background: hsl(0 0% 100%);
+  color: hsl(0 0% 0%);
+}
 
+section:nth-of-type(3) h2 {
+  padding-top: 30px;
+  margin: 0;
+}
+
+.main-contents {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid var(--color-light);
+}
+
+.self-introduction {
+  background-color: var(--color-primary);
+  padding: 10% 0 10% 100px;
+}
+
+.self-box {
+  display: flex;
+  background-color: var(--color-primary);
+  padding: var(--spacing-lg);
+}
+
+.self-box img {
+  width: 500px;
+  height: auto;
+  border-radius: var(--border-radius);
+  filter: grayscale(100%);
+}
+
+.self-text {
+  color: var(--color-secondary);
+  display: block;
+  padding-left: var(--spacing-lg);
+  padding-top: 10%;
+}
+
+.self-text h2 {
+  font-size: 50px;
+}
+
+/* ===================================
+   WORK セクション（作品カード横スクロール）
+   カードを追加・削除するには index.html の
+   class="section2" 内の .grid-item を編集する
+=================================== */
+.section2 {
+  min-height: 70vh;
+}
+
+.grid-title {
+  text-align: center;
+  font-size: 48px;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-accent);
+}
+
+.grid-container {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 10%;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE / Edge */
+  transition: transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+
+.grid-container::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* カード共通スタイル（.grid-item と .grid-item-1 で共有） */
+.grid-item,
 .grid-item-1 {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 25px;
-  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-  border: 1px solid #eee;
+  background-color: var(--color-secondary);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-light);
   min-width: 350px;
   min-height: 300px;
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* 上下中央揃え */
-  align-items: center; /* 左右中央揃え */
+  transition: transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
 }
 
-.grid-item-1:hover, 
+/* 「全ての記事を見る」カードは中央揃え */
+.grid-item-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-item:hover,
+.grid-item:focus,
+.grid-item-1:hover,
 .grid-item-1:focus {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+.grid-container a {
+  flex-direction: column;
+  max-width: 400px;
+  height: auto;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.grid-item img,
 .grid-item-1 img {
   max-width: 400px;
   height: 230px;
@@ -696,9 +250,383 @@ section:nth-of-type(2) p {
   border-radius: 10px;
 }
 
+.grid-item h3 {
+  font-size: 28px;
+  color: var(--color-accent);
+  text-align: left;
+  margin-top: var(--spacing-sm);
+}
+
 .grid-item-1 h3 {
   font-size: 28px;
-  color: #333;
-  text-align: center; /* テキストを中央揃え */
-  margin: 0; /* 上下の余白を削除 */
+  color: var(--color-accent);
+  text-align: center;
+  margin: 0;
+}
+
+.meta-info {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-lg) 0 0 0;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.meta-info .separator {
+  color: #ccc;
+}
+
+.meta-info .weekday {
+  font-weight: bold;
+}
+
+.meta-info .tag {
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--color-muted);
+  font-weight: bold;
+}
+
+/* 左右スクロールボタン（共通） */
+.scroll-right,
+.scroll-left {
+  position: absolute;
+  top: 285px;
+  background-color: #ddd;
+  border: none;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 10;
+  transition: transform var(--transition-speed) ease;
+}
+
+.scroll-right {
+  right: 20px;
+  transform: scale(1);
+}
+
+.scroll-left {
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+.scroll-right img,
+.scroll-left img {
+  width: 70%;
+  height: 70%;
+  pointer-events: none; /* img クリックを親ボタンに委譲 */
+}
+
+.scroll-right:hover,
+.scroll-left:hover {
+  background-color: #888;
+}
+
+/* ===================================
+   NOTE セクション（note RSS フィード）
+=================================== */
+.rss-section {
+  background-color: var(--color-light);
+  padding-top: 8px;
+}
+
+.rss-loading {
+  text-align: center;
+  padding: var(--spacing-lg);
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.rss-date {
+  font-size: 14px;
+  color: var(--color-muted);
+  text-align: left;
+  margin-top: 5px;
+}
+
+/* ===================================
+   SNS / Contact セクション
+=================================== */
+.contact-section {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--color-secondary);
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 var(--spacing-md);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  transition: transform var(--transition-speed) ease;
+}
+
+.social-links svg {
+  fill: var(--color-secondary);
+  width: 24px;
+  height: 24px;
+}
+
+.social-links a:hover,
+.social-links a:focus {
+  transform: scale(1.1);
+}
+
+/* ===================================
+   フッター
+=================================== */
+.site-footer {
+  color: var(--color-primary);
+  text-align: center;
+  position: relative;
+}
+
+.footer {
+  text-align: center;
+  color: var(--color-primary);
+}
+
+/* ===================================
+   ユーティリティ
+=================================== */
+.display-none {
+  display: none;
+}
+
+/* ===================================
+   スクロールアニメーション
+   ブラウザが animation-timeline: scroll() をサポートする場合、
+   CSS アニメーションで実装。非対応ブラウザは script.js 内の
+   GSAP ScrollTrigger がフォールバックとして動作。
+=================================== */
+.signature path {
+  --draw: 1.025;
+  --end:  1.025;
+  stroke-dasharray:  var(--end);
+  stroke-dashoffset: var(--draw);
+}
+
+.signature :is(.eye, .nose) {
+  fill: transparent;
+}
+
+@supports (animation-timeline: scroll()) {
+  section {
+    view-timeline-name: --section;
+  }
+
+  section:nth-of-type(1) svg {
+    transform: unset;
+    translate: -50% -50%;
+    animation: blow-out both ease-in, fade-in both ease-in;
+    animation-timeline: --section;
+    animation-range: exit-crossing 10% exit 0%,
+                     exit-crossing 10% exit-crossing 25%;
+  }
+
+  section:nth-of-type(2) p {
+    animation: fade-in both linear, fade-out both linear;
+    animation-timeline: --section;
+    animation-range: entry 10% entry 35%, exit 0% exit 25%;
+  }
+
+  .video-wrap {
+    animation: fade-in both linear, fade-out both linear;
+    animation-timeline: --section;
+    animation-range: entry 0% entry 25%, exit 10% exit 35%;
+  }
+
+  .video-wrap::after {
+    opacity: 0;
+  }
+
+  .signature path {
+    animation: draw both linear;
+    animation-timeline: --section;
+    animation-range: entry 50% entry 80%;
+  }
+
+  .signature :is(.eye, .nose) {
+    animation: draw both linear, fill both linear;
+    animation-timeline: --section;
+  }
+
+  .signature :is(.ear, .eye) {
+    animation-range: entry 80% entry 90%;
+  }
+
+  .signature .nose {
+    animation-range: entry 90% entry 100%;
+  }
+
+  @keyframes fade {
+    to { opacity: 0; }
+  }
+
+  @keyframes fade-in {
+    to { opacity: var(--opacity, 0.2); }
+  }
+
+  @keyframes fade-out {
+    to { opacity: 0; }
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fill {
+    to { fill: currentColor; }
+  }
+
+  @keyframes blow-out {
+    0%, 95% { background: transparent; }
+    to {
+      transform: translateZ(99vh);
+      background: black;
+    }
+  }
+}
+
+/* ===================================
+   メディアクエリ
+=================================== */
+
+/* タブレット以下（max-width: 768px） */
+@media screen and (max-width: 768px) {
+  section:nth-of-type(2) p {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-120%, -50%);
+    font-size: 40px;
+    line-height: 1.5;
+    height: auto;
+    width: auto;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .self-introduction {
+    padding: 5% 0;
+  }
+
+  .self-box {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .self-box img {
+    width: 100%;
+    height: auto;
+  }
+
+  .self-text {
+    padding-left: 0;
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .self-text h2 {
+    font-size: 30px;
+  }
+
+  .self-text p {
+    font-size: 16px;
+    word-break: break-all;
+  }
+}
+
+/* スマートフォン（max-width: 480px） */
+@media screen and (max-width: 480px) {
+  svg text {
+    font-size: 55px;
+  }
+
+  section:nth-of-type(3) h2 {
+    padding: 0 0 0 40px;
+    text-align: left;
+  }
+
+  .self-text p {
+    text-align: left;
+    padding: 0 40px;
+    font-size: 15px;
+    font-weight: normal;
+  }
+
+  .self-box img {
+    border-radius: 0;
+  }
+
+  .self-text h2 {
+    font-size: 50px;
+  }
+
+  .display-none {
+    display: block;
+    margin-bottom: 0;
+  }
+
+  .grid-container {
+    padding: 20px 70px 50px 10%;
+    gap: 20px;
+  }
+
+  .grid-item {
+    min-width: 250px;
+    box-shadow: 0 0 8px var(--color-light);
+    border: none;
+  }
+
+  .grid-item h3 {
+    font-size: 21px;
+  }
+
+  .grid-item img {
+    max-width: 100%;
+    height: 150px;
+    border-radius: 10px;
+  }
+
+  .grid-container a {
+    max-width: 100%;
+    height: auto;
+    white-space: normal;
+  }
+
+  .scroll-left,
+  .scroll-right {
+    display: none;
+  }
+
+  .footer {
+    font-size: 10px;
+  }
 }
