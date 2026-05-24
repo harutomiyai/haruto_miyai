@@ -153,7 +153,7 @@
       <h2 class="grid-title">WORK</h2>
       <div class="activities-grid">
 
-        <a href="https://note.com/haruto_miyai/m/ma9c2b38ca7c1" target="_blank" rel="noopener" class="activity-card">
+        <button class="activity-card activity-card--modal" data-modal="magazine">
           <div class="activity-thumb">
             <img src="assets/images/work-note.png" alt="問いと、学びと。" loading="lazy" />
           </div>
@@ -162,9 +162,9 @@
             <h3>「問いと、学びと。」</h3>
             <p>CoIUでの学び、飛騨古川での生活、生成AIとの向き合い方、自分の問いや違和感を文章として残している活動です。完成された答えを発信する場ではなく、日々の経験から考えたことを言語化し、学びの過程そのものを共有する場です。</p>
           </div>
-        </a>
+        </button>
 
-        <a href="https://open.spotify.com/show/0kAx1XuNna8j02xH5cegFh?si=833eb8b5e03c44c4" target="_blank" rel="noopener" class="activity-card">
+        <button class="activity-card activity-card--modal" data-modal="podcast">
           <div class="activity-thumb">
             <img src="assets/images/work-podcast.png" alt="問いと、対話と。" loading="lazy" />
           </div>
@@ -173,7 +173,7 @@
             <h3>「問いと、対話と。」</h3>
             <p>CoIUの学生同士で、学び・生活・地域・進路・違和感について話す音声コンテンツです。一人で考えた結論を語るのではなく、対話の中で考えが変わったり、問いが深まったりする過程を大切にしています。</p>
           </div>
-        </a>
+        </button>
 
         <a href="https://youtube.com/channel/UCGz-QuDX3WYsrjqkADqdZvw?si=gz6ceXrkZ1dtvNZc" target="_blank" rel="noopener" class="activity-card">
           <div class="activity-thumb">
@@ -205,6 +205,128 @@
         </div>
       </div>
     </section>
+
+    <!-- ==============================
+         Magazine Modal
+    ============================== -->
+    <div id="magazine-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-scroll">
+          <h2>「問いと、学びと。」マガジン</h2>
+
+          <section class="modal-section">
+            <h3>マガジン説明</h3>
+            <p>このマガジンは、新設大学「Co-Innovation University（CoIU）」の仲間が発信しているマガジンです。</p>
+            <p>このマガジンでは、授業の振り返りや、CoIUで行われている授業を経ての言語化、あるいは自分が見えている視点やつまずいている視点などを、各個人が言語化して発信する。</p>
+            <p>それらを集めたマガジンになっています。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>マガジンに込める、思い。</h3>
+            <p>まず、このマガジンに込める思いについてお話しします。</p>
+            <p>Co-Innovation University（CoIU）という新設の大学について知ってほしいと思ったとき、私一人だけで発信するのもどうかと考えていました。</p>
+            <p>そこで、いろいろな人の学び方や多角的な視点を「note」という文章・言語化の形で、もっと外部に発信できたらと思い、このマガジンを立ち上げました。</p>
+            <p>立ち上げの理由は大きく分けて2つあります：</p>
+
+            <h4>多角的な視点の発信</h4>
+            <p>一人ひとりの異なる学び方や視点を、文章として言語化し、学外へ届けていく場にしたいと考えています。</p>
+
+            <h4>言語化への挑戦</h4>
+            <p>私自身、もともとnoteを続けていく中で、書くことが自分の強みだと感じていました。そのため、この「言語化」という部分に自分自身も全力で取り組みたいですし、大学の認知拡大としても力を入れていきたいという思いから、このマガジンを作成しました。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>新設大学で学ぶ、一人ひとりにフォーカスを。</h3>
+            <p>先ほども多角的な視点の発信について書きましたが、私たちの大学は新設大学であり、偏差値や外見的な評価が定まっていない状態です。そこに飛び込んできている一人一人は、本当はすごい可能性を持っているのに、なかなか個別にフォーカスが当たることがありません。</p>
+            <p>だからこそ、このnoteが一人一人に光を当てられるような場所であってほしい。そう強く思って、このマガジンを立ち上げました。</p>
+            <p>さらに、個々の活動にフォーカスを当てることで、より多角的な視点が生まれます。それらを相互に読み合うことによって、お互いの学びがより深まっていくはずです。このマガジンには、そうした「一人ひとりへのフォーカス」と「学びの深化」が込められています。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>言語化することで、見えてくるものがある。</h3>
+            <p>もう一つの大きな理由として、言語化することで見えてくるものがあると僕は本気で信じてます。</p>
+            <p>私はは中学時からずっと noteを続けているのですが、当時は悩みがあったり苦しかったりする時に、よくnoteで発信をしていました。</p>
+            <p>その時は本当に辛くてどうしたらいいか分からなかったことも、他者に伝えるために「言語化」というステップを挟むことで、相手に伝わる状態を作ると同時に、自分自身も状況を客観的に把握できる。そんな状態を築くことによって、見えてくるものがたくさんありました。</p>
+            <p>さらには、言語化を通じて「自分はここが足りなかったな」という改善点の理解に繋がることもあれば、「それでも自分はよく頑張っていたんだな」と思える時もあります。</p>
+            <p>一番大きなメリットは、言語化した時に「自分たちはこういうことを考えていたんだ」と再認識できることです。</p>
+            <p>あの気づきは言語化なしには得られないものだと思っているので、私自身もそうですし、このマガジンに加入している CoIUの仲間も言語化することで、得られるものを一緒に体験したいという思いがあります。</p>
+          </section>
+
+          <div class="modal-cta">
+            <a href="https://note.com/haruto_miyai/m/ma9c2b38ca7c1" target="_blank" rel="noopener" class="modal-link">noteでマガジンを見る</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================
+         Podcast Modal
+    ============================== -->
+    <div id="podcast-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-scroll">
+          <h2>「問いと、対話と。」Podcast</h2>
+
+          <section class="modal-section">
+            <h3>Podcastの立ち位置</h3>
+            <p>「問いと、学びと。」では、授業の振り返りやCoIUでの学びを、文章や画像などの形で言語化し、一人ひとりの視点を発信してきました。</p>
+            <p>それに対して、このPodcastは「対話」という新しい形での発信です。</p>
+            <p>ちぇりこさんと私の2人で話したり、ゲストの学生さんをお呼びして、その人の魅力に深くフォーカスを当てたりしています。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>ゲストとの対話</h3>
+            <p>ゲストが何に取り組んでいるのか、どんなことに悩んでいるのか。</p>
+            <p>ただ知るだけでなく、対話を通じて理解を深めていけたら嬉しいです。</p>
+            <p>マガジンと同じく「一人ひとりにフォーカスを」というテーマを大切にしながら、Podcastでは「対話」という時間の中でしか掴めないものを、丁寧に拾っていきたいと思っています。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>Podcastに込める、思い。</h3>
+            <p>このPodcastを始めるにあたって、私が最も大切にしたいと思っていることがあります。</p>
+            <p>それは、「対話を通じて互いを理解する」というアプローチです。</p>
+            <p>Co-Innovation Universityという新設の大学で、私たちはまだ答えのない問いを抱えながら、自分たちで道を切り開いていこうとしています。その過程で、文章だけでは伝えきれない「温度感」や「本音」、そして「直感的に浮かんでくる気づき」があると思います。</p>
+            <p>その、気づきこそをPodcastの対話を通じて、発信できたらと思っています。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>なぜこれほど対話を重視するのか</h3>
+            <p>「問いと、学びと。」マガジンでもお伝えしているように、言語化のステップを踏むことで、相手に伝わる状態を作り、自分自身を客観的に把握することができます。</p>
+            <p>しかし、わざわざ文章ではなく「対話」にする理由は、会話でしか掴めない情報がたくさんあるからです。</p>
+            <p>人間は考えながら喋っているようで、直感も同時に使っていると思います。Podcastという一発勝負のテイクの中で「今、何を話すか」をリアルタイムで考えながら話さなければならない状態、そこにこそ、本音が出てきたり、お互いの深みや引き出しが自然と共有されたりする瞬間だと思います。</p>
+            <p>そうしたPodcastならではの雰囲気の中で、「この人はこう思っていたんだ」という発見を、大切にしたいです。</p>
+            <p>文章ではどうしても整えられてしまう部分が、対話の中ではそのままの温度感で伝わってくる、それが、私がPodcastに強く惹かれた理由です！</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>一人ひとりにフォーカスを</h3>
+            <p>新設大学であるCoIUでは、偏差値や外見的な評価がまだ定まっていない状態です。だからこそ、一人ひとりの学生や教職員、地域の方々が持っている可能性に、ちゃんと光を当てたい。</p>
+            <p>Podcastのゲストは、当初、学生を想定していましたが、教職員、地域の方、事務局の方々にも出演してもらうと思っています。</p>
+            <p>ちぇりこと私の2人で、さまざまな立場の人の話を聞きながら、CoIUが目指している場所を一緒に探っていきたいと思っています。</p>
+            <p>ゲストの学生さんをお呼びしたときも、「この人が今、何に取り組んでいて、どんなことに悩んでいるのか」を、じっくりと対話の中で深掘りします。</p>
+            <p>Podcastを通じて一人でも多くの人が「共に学ぶ仲間」として感じられたらなお嬉しいです。</p>
+          </section>
+
+          <section class="modal-section">
+            <h3>言語化から対話へ、そして共創へ</h3>
+            <p>マガジンは個人の言語化、Podcastは次のステップだと思っています。</p>
+            <p>一人で言語化したものを、対話を通じて深めていく。そして理解する。Podcastという時間の中で、私も含めゲストとして来てくださる方々が「自分はこう思っていたんだ」と再認識できたり、「相手はこう思っていたんだ」と気づいたり、そんな場になればいいなと思っています。</p>
+
+            <h4>最終ゴール</h4>
+            <p><strong>マガジン</strong>→言語化し、大学全体の学びの深化に貢献する</p>
+            <p><strong>Podcast</strong>→関わる全ての人が「Podcastを通じて共創が生まれた」と言えること</p>
+            <p>私やちぇりこも含め、ゲストとして参加してくださる皆さんと一緒に、CoIUの可能性を広げていきたい！</p>
+            <p>対話から生まれてくるつながりや気づきが、大学全体の「共創」につながっていく。そんな未来をPodcastを通じて実現したいと思っています。（全力でやらせてもらいます！）</p>
+          </section>
+
+          <div class="modal-cta">
+            <a href="https://open.spotify.com/show/0kAx1XuNna8j02xH5cegFh?si=833eb8b5e03c44c4" target="_blank" rel="noopener" class="modal-link">Spotifyで聞く</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <p class="footer">© 2026 Haruto Miyai. All rights reserved.</p>

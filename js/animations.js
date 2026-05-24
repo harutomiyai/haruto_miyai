@@ -11,7 +11,6 @@ if (!CSS.supports("animation-timeline: scroll()")) {
 
   const scrub = 0.2;
 
-  // Section 1: Hero テキストのフェードイン
   const name = document.querySelector("section:nth-of-type(1) svg");
   gsap.timeline().to(name, {
     scrollTrigger: {
@@ -24,7 +23,6 @@ if (!CSS.supports("animation-timeline: scroll()")) {
     opacity: 1,
   });
 
-  // Section 2: タグラインのフェードイン → フェードアウト
   const p = document.querySelector("section:nth-of-type(2) p");
   gsap.timeline()
     .to(p, {
@@ -57,7 +55,6 @@ const scrollRight   = document.querySelector('.scroll-right');
 const scrollLeft    = document.querySelector('.scroll-left');
 
 if (workContainer && scrollRight && scrollLeft) {
-  /** ボタンの表示/非表示をスクロール位置に合わせて更新 */
   function updateScrollButtons() {
     const max = workContainer.scrollWidth - workContainer.clientWidth;
     scrollRight.style.transform = workContainer.scrollLeft >= max - 1 ? 'scale(0)' : 'scale(1)';
@@ -72,5 +69,63 @@ if (workContainer && scrollRight && scrollLeft) {
   );
   workContainer.addEventListener('scroll', updateScrollButtons);
 
-  updateScrollButtons(); // ページ読み込み時の初期状態を反映
+  updateScrollButtons();
 }
+
+// ===================================
+// Magazine Modal
+// ===================================
+const magazineBtn = document.querySelector('[data-modal="magazine"]');
+const magazineModal = document.getElementById('magazine-modal');
+const podcastBtn = document.querySelector('[data-modal="podcast"]');
+const podcastModal = document.getElementById('podcast-modal');
+const modalClose = document.querySelectorAll('.modal-close');
+
+function setupModal(btn, modal) {
+  if (!btn || !modal) return;
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+function setupModalClose(modal) {
+  if (!modal) return;
+
+  const closeBtn = modal.querySelector('.modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+}
+
+setupModal(magazineBtn, magazineModal);
+setupModal(podcastBtn, podcastModal);
+setupModalClose(magazineModal);
+setupModalClose(podcastModal);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (magazineModal?.style.display === 'flex') {
+      magazineModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    if (podcastModal?.style.display === 'flex') {
+      podcastModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  }
+});
