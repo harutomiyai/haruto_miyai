@@ -808,6 +808,108 @@ body > section:nth-of-type(3) {
 }
 
 /* ===================================
+   WORK — 背景写真付きカード
+=================================== */
+
+/* 各カードの全画面背景写真（均一オーバーレイ + 写真） */
+.activity-card--magazine {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('/assets/images/%E9%A3%9B%E9%A8%A8%E5%8F%A4%E5%B7%9D_%E7%A9%BA.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.activity-card--podcast {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('/assets/images/%E5%86%99%E7%9C%9F%202026%E5%B9%B45%E6%9C%887%E6%97%A5.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.activity-card--youtube {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('/assets/images/%E9%A3%9B%E9%A8%A8%E5%8F%A4%E5%B7%9D_%E5%B7%9D.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+/* レイアウト共通: 縦中央揃え + 余白 + ボーダー調整 */
+.activity-card--magazine,
+.activity-card--podcast,
+.activity-card--youtube {
+  align-items: center;
+  padding: clamp(40px, 8vh, 100px) clamp(32px, 6vw, 100px);
+  gap: clamp(28px, 4vw, 64px);
+  box-sizing: border-box;
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.activity-card--youtube {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+/* 奇数カード（1・3番目）: 正方形サムネイル 左 / テキスト 右 */
+.activity-card--magazine,
+.activity-card--youtube {
+  grid-template-columns: clamp(180px, 26vw, 380px) 1fr;
+}
+
+/* 偶数カード（2番目）: テキスト 左 / 正方形サムネイル 右
+   ※ .activity-card:nth-child(even) (特異度0,2,0) を上書きするため二重クラスで指定 */
+.activity-card.activity-card--podcast {
+  grid-template-columns: 1fr clamp(180px, 26vw, 380px);
+}
+
+/* サムネイルを正方形に（角丸付き） */
+.activity-card--magazine .activity-thumb,
+.activity-card--podcast .activity-thumb,
+.activity-card--youtube .activity-thumb {
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* テキストエリア: カード全体にオーバーレイがかかるので背景透明 */
+.activity-card--magazine .activity-body,
+.activity-card--podcast .activity-body,
+.activity-card--youtube .activity-body {
+  background: transparent;
+  color: #fff;
+}
+
+.activity-card--magazine .activity-platform,
+.activity-card--podcast .activity-platform,
+.activity-card--youtube .activity-platform {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.activity-card--magazine .activity-body h3,
+.activity-card--podcast .activity-body h3,
+.activity-card--youtube .activity-body h3 {
+  color: #fff;
+}
+
+.activity-card--magazine .activity-body p,
+.activity-card--podcast .activity-body p,
+.activity-card--youtube .activity-body p {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ===================================
    フッター
 =================================== */
 .site-footer {
@@ -950,6 +1052,33 @@ body > section:nth-of-type(3) {
     aspect-ratio: 16 / 9;
     min-height: 0;
   }
+
+  /* 背景写真カード: 1カラムに変更・正方形サムネイル中央配置 */
+  .activity-card--magazine,
+  .activity-card--podcast,
+  .activity-card--youtube {
+    grid-template-columns: 1fr;
+    padding: 48px 24px;
+    gap: 28px;
+    min-height: 80vh;
+  }
+
+  .activity-card--magazine .activity-thumb,
+  .activity-card--podcast .activity-thumb,
+  .activity-card--youtube .activity-thumb {
+    width: clamp(160px, 50vw, 260px);
+    aspect-ratio: 1 / 1;
+    height: auto;
+    min-height: 0;
+    margin: 0 auto;
+    order: -1;
+  }
+
+  .activity-card--magazine .activity-body,
+  .activity-card--podcast .activity-body,
+  .activity-card--youtube .activity-body {
+    order: 0;
+  }
 }
 
 /* タブレット以下（max-width: 768px） */
@@ -984,6 +1113,12 @@ body > section:nth-of-type(3) {
     width: auto;
     text-align: center;
     white-space: nowrap;
+  }
+
+  .activity-card--magazine,
+  .activity-card--podcast,
+  .activity-card--youtube {
+    background-attachment: scroll;
   }
 
   .profile-section {
