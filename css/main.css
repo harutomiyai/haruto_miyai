@@ -145,7 +145,7 @@ section:nth-of-type(3) {
 
 .profile-content {
   position: relative;
-  padding: 100px 80px 60px 80px;
+  padding: 100px 100px 60px 100px;
   max-width: 700px;
   color: #fff;
   display: flex;
@@ -410,20 +410,104 @@ section:nth-of-type(3) {
 }
 
 /* ===================================
+   SNS セクション（プロフィール下）
+=================================== */
+.sns-section {
+  background-color: var(--color-secondary);
+  padding: var(--spacing-lg) var(--spacing-md);
+  position: relative;
+  z-index: 5;
+}
+
+.sns-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 var(--spacing-md);
+}
+
+.sns-container h3 {
+  font-size: 18px;
+  margin-bottom: var(--spacing-md);
+  margin-top: 0;
+  font-weight: 700;
+}
+
+.sns-container p {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+/* ===================================
    SNS / Contact セクション
 =================================== */
 .contact-section {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xl) var(--spacing-md);
   background-color: var(--color-secondary);
   position: relative;
   z-index: 6;
 }
 
-.contact-container {
-  max-width: 800px;
-  margin: 0 auto;
+.contact-section h2 {
+  margin-bottom: var(--spacing-xl);
   text-align: center;
-  padding: 0 var(--spacing-md);
+}
+
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-container {
+  text-align: center;
+  padding: 0;
+}
+
+.contact-container p {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.contact-container--sns {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.contact-container h3 {
+  font-size: 18px;
+  margin-bottom: var(--spacing-md);
+  margin-top: 0;
+  font-weight: 700;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform var(--transition-speed) ease;
+}
+
+.contact-links a:hover,
+.contact-links a:focus {
+  transform: scale(1.05);
 }
 
 .social-links {
