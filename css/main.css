@@ -132,6 +132,7 @@ body > section:nth-of-type(3) {
 .profile-section {
   position: relative;
   padding-top: 100vh;
+  background-color: #000;
   background-image:
     linear-gradient(to right,  rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.90) 40%, rgba(0,0,0,0.1) 100%),
     linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.10) 100%),
@@ -173,6 +174,11 @@ body > section:nth-of-type(3) {
   margin-bottom: 0;
 }
 
+/* モバイル専用プロフィール画像エリア（PC では非表示） */
+.profile-hero-img {
+  display: none;
+}
+
 /* ===================================
    WORK セクション（作品カード横スクロール）
    カードを追加・削除するには index.html の
@@ -188,6 +194,10 @@ body > section:nth-of-type(3) {
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
   color: var(--color-accent);
+}
+
+.activities-section .grid-title {
+  color: #fff;
 }
 
 .grid-container {
@@ -336,8 +346,8 @@ body > section:nth-of-type(3) {
    ACTIVITIES セクション（活動紹介カード）
 =================================== */
 .activities-section {
-  background: var(--color-secondary);
-  padding-bottom: 200px;
+  background: #000;
+  padding-bottom: 0;
   position: relative;
   z-index: 6;
 }
@@ -961,8 +971,10 @@ body > section:nth-of-type(3) {
 =================================== */
 .site-footer {
   color: var(--color-primary);
+  background: var(--color-secondary);
   text-align: center;
   position: relative;
+  padding: 24px 0;
 }
 
 .footer {
@@ -1337,22 +1349,27 @@ body > section:nth-of-type(3) {
     transform: translate(-150%, -50%);
   }
 
-  /* モバイル: 右側（人物）を上に表示し、テキストを下に */
+  /* モバイル: 専用画像divを表示 → padding-top 不要 */
   .profile-section {
-    padding-top: 52vh;
-    background-attachment: scroll, scroll;
-    background-image:
-      linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
-      url('/assets/images/0DCF802A-C503-4C13-9081-9D1F9B3C18CD.jpg');
-    background-position: right center, right center;
-    background-size: cover, cover;
-    background-repeat: no-repeat, no-repeat;
+    padding-top: 0;
+    background: #000;
+    background-image: none;
+  }
+
+  /* 人物が写っている右側を正確に表示する専用エリア */
+  .profile-hero-img {
+    display: block;
+    width: 100%;
+    height: 56vh;
+    background-image: url('/assets/images/0DCF802A-C503-4C13-9081-9D1F9B3C18CD.jpg');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
   }
 
   .profile-content {
-    padding: 40px 16px 30px 16px;
-    background: rgb(0, 0, 0);
-    box-shadow: 0 -48px 48px 24px rgb(0, 0, 0);
+    padding: 36px 16px 30px 16px;
+    background: #000;
   }
 
   .profile-content h1,
