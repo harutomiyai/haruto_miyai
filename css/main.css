@@ -31,7 +31,7 @@ body {
   overflow-x: hidden;
 }
 
-section {
+body > section {
   width: 100vw;
   position: relative;
 }
@@ -61,19 +61,19 @@ a {
    Section 1 — Hero（「Haruto Miyai」SVG テキスト）
    height: 200vh でスクロールアニメーション用の余白を確保
 =================================== */
-section:nth-of-type(1) {
+body > section:nth-of-type(1) {
   height: 200vh;
   background: hsl(0 0% 100%);
   color: hsl(0 0% 0%);
 }
 
 /* Section 1 のみ 3D パースペクティブを追加（blow-out アニメーション用） */
-section:nth-of-type(1) .section__content {
+body > section:nth-of-type(1) .section__content {
   transform-style: preserve-3d;
   perspective: 100vh;
 }
 
-section:nth-of-type(1) svg {
+body > section:nth-of-type(1) svg {
   --opacity: 1;
   font-weight: 600;
   font-size: clamp(2rem, 10vw + 1rem, 10rem);
@@ -96,14 +96,14 @@ svg text {
 /* ===================================
    Section 2 — タグライン（「私のデザインは常に変化し続ける。」）
 =================================== */
-section:nth-of-type(2) {
+body > section:nth-of-type(2) {
   z-index: 2;
   color: hsl(0 0% 0%);
   min-height: 100vh;
   background: hsl(0 0% 0%);
 }
 
-section:nth-of-type(2) p {
+body > section:nth-of-type(2) p {
   --opacity: 1;
   color: hsl(0 0% 100%);
   font-size: 70px;
@@ -125,7 +125,7 @@ section:nth-of-type(2) p {
 /* ===================================
    Section 3 — 自己紹介プロフィール（全画面）
 =================================== */
-section:nth-of-type(3) {
+body > section:nth-of-type(3) {
   z-index: 5;
 }
 
@@ -357,6 +357,7 @@ section:nth-of-type(3) {
   border: 1px solid var(--color-light);
   overflow: hidden;
   display: block;
+  text-align: left;
   transition: transform var(--transition-speed) ease,
               box-shadow var(--transition-speed) ease;
 }
@@ -373,6 +374,7 @@ section:nth-of-type(3) {
   aspect-ratio: 16 / 9;
   background: var(--color-light);
   overflow: hidden;
+  line-height: 0;
 }
 
 .activity-thumb img {
@@ -380,10 +382,12 @@ section:nth-of-type(3) {
   height: 100%;
   object-fit: cover;
   display: block;
+  vertical-align: top;
 }
 
 .activity-body {
   padding: var(--spacing-sm);
+  text-align: left;
 }
 
 .activity-platform {
@@ -549,17 +553,27 @@ section:nth-of-type(3) {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--color-secondary);
+  background: #fff;
   z-index: 999;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  -webkit-overflow-scrolling: touch;
 }
 
-.modal.modal--active {
+.modal.modal--active,
+.modal.modal--closing {
   display: flex;
+}
+
+.modal.modal--active .modal-content {
   animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal.modal--closing .modal-content {
+  animation: slideDown 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes slideUp {
@@ -571,96 +585,142 @@ section:nth-of-type(3) {
   }
 }
 
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
 .modal-content {
   position: relative;
   width: 100%;
-  height: 100%;
-  max-width: 900px;
+  min-height: 100%;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 60px 60px;
+  padding: 96px 40px 132px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  background: transparent;
+  color: rgb(8, 19, 26);
+  font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+               Arial, "Noto Sans JP", Meiryo, sans-serif;
 }
 
-.modal-close {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background: transparent;
-  border: 2px solid var(--color-primary);
-  border-radius: 50%;
-  font-size: 32px;
+.modal-actions {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.modal-action-button {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(8, 19, 26, 0.12);
+  border-radius: 9999px;
+  color: rgba(8, 19, 26, 0.66);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-speed) ease;
-  z-index: 1000;
+  transition: background-color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              color var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(14px);
 }
 
-.modal-close:hover,
-.modal-close:focus {
-  background: var(--color-primary);
-  color: var(--color-secondary);
-  transform: scale(1.1);
+.modal-action-button:hover,
+.modal-action-button:focus {
+  background: rgba(245, 248, 250, 0.94);
+  border-color: rgba(8, 19, 26, 0.18);
+  color: rgb(8, 19, 26);
+}
+
+.modal-close {
+  font-size: 28px;
+  line-height: 1;
+  padding: 0;
+}
+
+.modal-access img,
+.modal-access svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.modal-access svg {
+  fill: currentColor;
 }
 
 .modal-scroll {
-  overflow-y: auto;
-  padding-right: 20px;
-  height: 100%;
+  overflow: visible;
+  height: auto;
+  overscroll-behavior: contain;
 }
 
-.modal-scroll::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-scroll::-webkit-scrollbar-track {
-  background: var(--color-light);
-}
-
-.modal-scroll::-webkit-scrollbar-thumb {
-  background: var(--color-accent);
-  border-radius: 4px;
-}
-
-.modal-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+.modal-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1280 / 670;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 0 40px;
 }
 
 .modal-scroll h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin: 0 0 40px 0;
-  color: var(--color-primary);
+  font-size: clamp(1.9rem, 4vw, 2.25rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+  margin: 0 0 48px;
+  color: rgb(8, 19, 26);
+  font-weight: 700;
 }
 
 .modal-section {
-  margin-bottom: 40px;
+  width: auto;
+  min-height: 0;
+  margin: 0 0 44px;
+  padding: 0;
+  background: transparent;
+  color: rgb(8, 19, 26);
+  position: relative;
 }
 
 .modal-section h3 {
-  font-size: 24px;
+  font-size: 1.25rem;
+  line-height: 1.6;
   font-weight: 700;
-  color: var(--color-primary);
-  margin: 0 0 16px 0;
-  letter-spacing: 0.02em;
+  color: rgb(8, 19, 26);
+  margin: 0 0 18px;
+  letter-spacing: 0;
 }
 
 .modal-section h4 {
-  font-size: 18px;
+  font-size: 1rem;
+  line-height: 1.65;
   font-weight: 700;
-  color: var(--color-accent);
-  margin: 24px 0 12px 0;
+  color: rgb(8, 19, 26);
+  margin: 28px 0 10px;
 }
 
 .modal-section p {
-  font-size: 16px;
-  line-height: 1.9;
-  color: var(--color-muted);
-  margin: 0 0 16px 0;
+  font-size: 1rem;
+  line-height: 2.05;
+  color: rgba(8, 19, 26, 0.82);
+  margin: 0 0 18px;
+  letter-spacing: 0;
 }
 
 .modal-section p:last-child {
@@ -668,34 +728,47 @@ section:nth-of-type(3) {
 }
 
 .modal-cta {
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid var(--color-light);
-  text-align: center;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid rgb(230, 230, 230);
+  text-align: left;
 }
 
 .modal-link {
-  display: inline-block;
-  padding: 14px 32px;
-  background: var(--color-primary);
-  color: var(--color-secondary);
-  border-radius: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  background: rgb(8, 19, 26);
+  color: #fff;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 16px;
-  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: background-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
 }
 
 .modal-link:hover,
 .modal-link:focus {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(8, 19, 26, 0.86);
+  transform: none;
 }
 
 .activity-card--modal {
-  background: none;
-  border: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-secondary);
+  border: 1px solid var(--color-light);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  color: inherit;
   cursor: pointer;
+  font: inherit;
   padding: 0;
+  text-align: left;
+  width: 100%;
 }
 
 /* ===================================
@@ -737,11 +810,11 @@ section:nth-of-type(3) {
 }
 
 @supports (animation-timeline: scroll()) {
-  section {
+  body > section {
     view-timeline-name: --section;
   }
 
-  section:nth-of-type(1) svg {
+  body > section:nth-of-type(1) svg {
     transform: unset;
     translate: -50% -50%;
     animation: blow-out both ease-in, fade-in both ease-in;
@@ -750,7 +823,7 @@ section:nth-of-type(3) {
                      exit-crossing 10% exit-crossing 25%;
   }
 
-  section:nth-of-type(2) p {
+  body > section:nth-of-type(2) p {
     animation: fade-in both linear, fade-out both linear;
     animation-timeline: --section;
     animation-range: entry 10% entry 35%, exit 0% exit 25%;
@@ -834,11 +907,11 @@ section:nth-of-type(3) {
     --spacing-xl: 60px;
   }
 
-  section:nth-of-type(1) {
+  body > section:nth-of-type(1) {
     height: 150vh;
   }
 
-  section:nth-of-type(1) svg {
+  body > section:nth-of-type(1) svg {
     font-size: clamp(1.5rem, 8vw, 6rem);
   }
 
@@ -846,7 +919,7 @@ section:nth-of-type(3) {
     font-size: clamp(1.5rem, 8vw, 6rem);
   }
 
-  section:nth-of-type(2) p {
+  body > section:nth-of-type(2) p {
     writing-mode: vertical-rl;
     text-orientation: upright;
     position: fixed;
@@ -965,34 +1038,38 @@ section:nth-of-type(3) {
   }
 
   .modal-content {
-    padding: 50px 30px;
+    max-width: 100%;
+    padding: 72px 36px 120px;
+    box-shadow: none;
   }
 
   .modal-close {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     font-size: 28px;
   }
 
   .modal-scroll h2 {
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    margin-bottom: 30px;
+    font-size: clamp(1.9rem, 4vw, 2.4rem);
+    line-height: 1.38;
+    margin-bottom: 36px;
   }
 
   .modal-section h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
+    font-size: 1.22rem;
+    line-height: 1.55;
+    margin-bottom: 14px;
   }
 
   .modal-section h4 {
-    font-size: 16px;
-    margin-top: 18px;
+    font-size: 1rem;
+    margin-top: 24px;
   }
 
   .modal-section p {
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 12px;
+    font-size: 0.98rem;
+    line-height: 1.95;
+    margin-bottom: 16px;
   }
 }
 
@@ -1004,11 +1081,11 @@ section:nth-of-type(3) {
     --spacing-xl: 40px;
   }
 
-  section:nth-of-type(1) {
+  body > section:nth-of-type(1) {
     height: 120vh;
   }
 
-  section:nth-of-type(1) svg {
+  body > section:nth-of-type(1) svg {
     font-size: clamp(1.2rem, 6vw, 4rem);
   }
 
@@ -1016,7 +1093,7 @@ section:nth-of-type(3) {
     font-size: clamp(1.2rem, 6vw, 4rem);
   }
 
-  section:nth-of-type(2) p {
+  body > section:nth-of-type(2) p {
     font-size: 20px;
     transform: translate(-150%, -50%);
   }
@@ -1130,53 +1207,55 @@ section:nth-of-type(3) {
   }
 
   .modal-content {
-    padding: 40px 20px;
+    padding: 68px 18px 112px;
   }
 
   .modal-close {
-    width: 36px;
-    height: 36px;
+    width: 50px;
+    height: 50px;
     font-size: 24px;
-    top: 20px;
-    right: 20px;
+    bottom: 18px;
   }
 
   .modal-scroll {
-    padding-right: 10px;
+    padding-right: 0;
   }
 
   .modal-scroll h2 {
-    font-size: clamp(1.5rem, 3.5vw, 2rem);
-    margin-bottom: 24px;
+    font-size: 1.8rem;
+    line-height: 1.4;
+    margin-bottom: 32px;
   }
 
   .modal-section {
-    margin-bottom: 30px;
+    margin-bottom: 36px;
   }
 
   .modal-section h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 1.12rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
   }
 
   .modal-section h4 {
-    font-size: 15px;
-    margin-top: 16px;
+    font-size: 0.98rem;
+    margin-top: 22px;
   }
 
   .modal-section p {
-    font-size: 14px;
-    line-height: 1.75;
-    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    margin-bottom: 15px;
   }
 
   .modal-cta {
-    margin-top: 30px;
-    padding-top: 30px;
+    margin-top: 42px;
+    padding-top: 28px;
   }
 
   .modal-link {
-    padding: 12px 24px;
-    font-size: 14px;
+    width: 100%;
+    padding: 0 18px;
+    font-size: 0.95rem;
   }
 }
