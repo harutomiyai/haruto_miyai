@@ -331,11 +331,88 @@ section:nth-of-type(3) h2 {
 }
 
 /* ===================================
-   NOTE セクション（note RSS フィード）
+   ACTIVITIES セクション（活動紹介カード）
+=================================== */
+.activities-section {
+  background: var(--color-secondary);
+  padding-bottom: 80px;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  padding: 0 var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.activity-card {
+  background: var(--color-secondary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-light);
+  overflow: hidden;
+  display: block;
+  transition: transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+
+.activity-card:hover,
+.activity-card:focus {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* サムネイル領域（画像追加前はグレー表示） */
+.activity-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-light);
+  overflow: hidden;
+}
+
+.activity-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.activity-body {
+  padding: var(--spacing-sm);
+}
+
+.activity-platform {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-muted);
+  background: var(--color-light);
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+
+.activity-body h3 {
+  font-size: 22px;
+  color: var(--color-accent);
+  margin: 12px 0 8px;
+}
+
+.activity-body p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* ===================================
+   NOTE セクション — editorial magazine style
 =================================== */
 .rss-section {
-  background-color: var(--color-light);
-  padding-top: 8px;
+  background-color: #f5f4f0;
+  padding-bottom: 80px;
+  border-top: 1px solid #e0ddd6;
 }
 
 .rss-loading {
@@ -345,11 +422,110 @@ section:nth-of-type(3) h2 {
   font-size: 14px;
 }
 
-.rss-date {
-  font-size: 14px;
-  color: var(--color-muted);
-  text-align: left;
-  margin-top: 5px;
+/* 3カラム グリッドレイアウト */
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 0 10%;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 2px solid #1a1a1a;
+  border-left: 2px solid #1a1a1a;
+}
+
+/* 各記事カード — エディトリアル スタイル */
+.note-card-item {
+  border-radius: 0 !important;
+  border: none !important;
+  border-right: 2px solid #1a1a1a !important;
+  border-bottom: 2px solid #1a1a1a !important;
+  box-shadow: none !important;
+  background: #f5f4f0;
+  transition: background-color var(--transition-speed) ease;
+  display: block;
+}
+
+.note-card-item:hover,
+.note-card-item:focus {
+  transform: none !important;
+  box-shadow: none !important;
+  background: #fffffe;
+}
+
+/* サムネイル */
+.note-card-item .activity-thumb {
+  border-radius: 0;
+  aspect-ratio: 3 / 2;
+  background: #e2ded6;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+/* プラットフォームバッジは NOTE セクションでは非表示 */
+.note-card-item .activity-platform {
+  display: none;
+}
+
+/* カード本文エリア */
+.note-card-item .activity-body {
+  padding: 20px 24px 28px;
+}
+
+/* 記事タイトル */
+.note-card-item .activity-body h3 {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #111;
+  margin: 8px 0 10px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: normal;
+}
+
+/* 記事カードの日付 */
+.note-date {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.07em;
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+
+/* 記事の概要（2行でクランプ） */
+.note-excerpt {
+  font-size: 13px;
+  line-height: 1.85;
+  color: #555;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 「全ての記事を見る」ボタン */
+.note-view-all {
+  text-align: center;
+  margin-top: var(--spacing-md);
+}
+
+.note-view-all-link {
+  display: inline-block;
+  padding: 13px 48px;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  transition: all var(--transition-speed) ease;
+}
+
+.note-view-all-link:hover,
+.note-view-all-link:focus {
+  background: #1a1a1a;
+  color: #f5f4f0;
 }
 
 /* ===================================
@@ -516,6 +692,20 @@ section:nth-of-type(3) h2 {
    メディアクエリ
 =================================== */
 
+/* タブレット（max-width: 900px）: 3列 → 1列 */
+@media screen and (max-width: 900px) {
+  .activities-grid {
+    grid-template-columns: 1fr;
+    padding: 0 var(--spacing-md);
+  }
+
+  /* NOTE グリッド: タブレットは2カラム */
+  .note-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 var(--spacing-md);
+  }
+}
+
 /* タブレット以下（max-width: 768px） */
 @media screen and (max-width: 768px) {
   section:nth-of-type(2) p {
@@ -594,36 +784,29 @@ section:nth-of-type(3) h2 {
     margin-bottom: 0;
   }
 
-  .grid-container {
-    padding: 20px 70px 50px 10%;
-    gap: 20px;
+  .activities-grid {
+    padding: 0 var(--spacing-xs);
+    gap: var(--spacing-sm);
   }
 
-  .grid-item {
-    min-width: 250px;
-    box-shadow: 0 0 8px var(--color-light);
-    border: none;
+  .activity-body h3 {
+    font-size: 18px;
   }
 
-  .grid-item h3 {
-    font-size: 21px;
+  .activity-body p {
+    font-size: 13px;
   }
 
-  .grid-item img {
-    max-width: 100%;
-    height: 150px;
-    border-radius: 10px;
+  /* NOTE グリッド: スマホは1カラム */
+  .note-grid {
+    grid-template-columns: 1fr;
+    padding: 0;
+    border-left: none;
+    border-top: 2px solid #1a1a1a;
   }
 
-  .grid-container a {
-    max-width: 100%;
-    height: auto;
-    white-space: normal;
-  }
-
-  .scroll-left,
-  .scroll-right {
-    display: none;
+  .note-card-item {
+    border-right: none !important;
   }
 
   .footer {
