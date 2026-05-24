@@ -126,53 +126,27 @@ section:nth-of-type(2) p {
    Section 3 — 自己紹介プロフィール（全画面）
 =================================== */
 section:nth-of-type(3) {
-  z-index: 4;
+  z-index: 5;
 }
 
 .profile-section {
   position: relative;
-  /* overflow: hidden は sticky の動作を妨げるため設定しない */
+  padding-top: 100vh;
+  background-image:
+    linear-gradient(to right,  rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.90) 40%, rgba(0,0,0,0.1) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.10) 100%),
+    url('/assets/images/0DCF802A-C503-4C13-9081-9D1F9B3C18CD.jpg');
+  background-attachment: fixed, fixed, fixed;
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  min-height: auto;
 }
 
-/* 画像を sticky で固定：セクション内にいる間は常に画面上部に張り付く */
-.profile-bg {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  /* -100vh で次の要素（テキスト）を bg の上に重ねる */
-  margin-bottom: -100vh;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.profile-bg img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-/* 左・上からの黒グラデーション（少し濃いめ） */
-.profile-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to right,  rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.38) 68%, rgba(0,0,0,0.12) 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.10) 100%);
-}
-
-/* テキストは通常フローでスクロール。z-index で bg の上に重なる。
-   margin-top: 100vh により、最初は画像だけ見え、
-   スクロールするとテキストが下から登場する。 */
 .profile-content {
   position: relative;
-  z-index: 2;
-  margin-top: 100vh;          /* 画像を単体で見せる分の余白 */
-  padding: 100px 80px 180px 80px;
-  max-width: 740px;
+  padding: 100px 80px 60px 80px;
+  max-width: 700px;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -181,15 +155,15 @@ section:nth-of-type(3) {
 }
 
 .profile-content h2 {
-  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
   margin: 0 0 36px 0;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .profile-content p {
-  font-size: clamp(1rem, 1.25vw, 1.15rem);
-  line-height: 2.1;
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  line-height: 1.8;
   margin: 0 0 24px 0;
   opacity: 0.93;
 }
@@ -363,6 +337,8 @@ section:nth-of-type(3) {
 .activities-section {
   background: var(--color-secondary);
   padding-bottom: 80px;
+  position: relative;
+  z-index: 6;
 }
 
 .activities-grid {
@@ -439,6 +415,8 @@ section:nth-of-type(3) {
 .contact-section {
   padding: var(--spacing-xl) 0;
   background-color: var(--color-secondary);
+  position: relative;
+  z-index: 6;
 }
 
 .contact-container {
@@ -624,12 +602,12 @@ section:nth-of-type(3) {
   }
 
   .profile-content {
-    padding: 80px 32px 140px 32px;
+    padding: 80px 32px 60px 32px;
     max-width: 100%;
   }
 
   .profile-content h2 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
 
   .profile-content p {
@@ -652,11 +630,11 @@ section:nth-of-type(3) {
   }
 
   .profile-content {
-    padding: 60px 20px 100px 20px;
+    padding: 60px 20px 50px 20px;
   }
 
   .profile-content h2 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 
   .profile-content p {
