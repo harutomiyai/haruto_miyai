@@ -343,38 +343,63 @@ body > section:nth-of-type(3) {
 }
 
 .activities-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-md);
-  padding: 0 var(--spacing-xl);
-  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  padding: 0;
   margin: 0 auto;
 }
 
 .activity-card {
   background: var(--color-secondary);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-light);
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid var(--color-light);
   overflow: hidden;
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(320px, 1.05fr);
+  align-items: stretch;
+  min-height: 100vh;
+  min-height: 100svh;
   text-align: left;
   transition: transform var(--transition-speed) ease,
               box-shadow var(--transition-speed) ease;
 }
 
+.activity-card:nth-child(even) {
+  grid-template-columns: minmax(320px, 1.05fr) minmax(300px, 0.95fr);
+}
+
+.activity-card:nth-child(even) .activity-thumb {
+  order: 2;
+}
+
+.activity-card:nth-child(even) .activity-body {
+  order: 1;
+}
+
+.activity-card:last-child {
+  border-bottom: 1px solid var(--color-light);
+}
+
 .activity-card:hover,
 .activity-card:focus {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  transform: none;
+  box-shadow: none;
 }
 
 /* サムネイル領域（画像追加前はグレー表示） */
 .activity-thumb {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   background: var(--color-light);
   overflow: hidden;
   line-height: 0;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .activity-thumb img {
@@ -386,8 +411,11 @@ body > section:nth-of-type(3) {
 }
 
 .activity-body {
-  padding: var(--spacing-sm);
+  padding: var(--spacing-lg);
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .activity-platform {
@@ -402,13 +430,14 @@ body > section:nth-of-type(3) {
 }
 
 .activity-body h3 {
-  font-size: 22px;
+  font-size: clamp(1.6rem, 2vw, 2.35rem);
   color: var(--color-accent);
-  margin: 12px 0 8px;
+  margin: 16px 0 12px;
+  line-height: 1.35;
 }
 
 .activity-body p {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.9;
   color: var(--color-muted);
   margin: 0;
@@ -766,8 +795,9 @@ body > section:nth-of-type(3) {
   -webkit-appearance: none;
   appearance: none;
   background: var(--color-secondary);
-  border: 1px solid var(--color-light);
-  border-radius: var(--border-radius);
+  border: 0;
+  border-top: 1px solid var(--color-light);
+  border-radius: 0;
   box-sizing: border-box;
   color: inherit;
   cursor: pointer;
@@ -897,13 +927,29 @@ body > section:nth-of-type(3) {
    メディアクエリ
 =================================== */
 
-/* タブレット（max-width: 900px）: 3列 → 1列 */
+/* タブレット（max-width: 900px） */
 @media screen and (max-width: 900px) {
   .activities-grid {
-    grid-template-columns: 1fr;
-    padding: 0 var(--spacing-md);
+    padding: 0;
+    gap: var(--spacing-md);
   }
 
+  .activity-card,
+  .activity-card:nth-child(even) {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .activity-card:nth-child(even) .activity-thumb,
+  .activity-card:nth-child(even) .activity-body {
+    order: initial;
+  }
+
+  .activity-thumb {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
 }
 
 /* タブレット以下（max-width: 768px） */
@@ -993,17 +1039,17 @@ body > section:nth-of-type(3) {
   }
 
   .activities-grid {
-    grid-template-columns: 1fr;
-    padding: 0 var(--spacing-md);
+    padding: 0;
     gap: var(--spacing-md);
   }
 
   .activity-card {
-    border-radius: 16px;
+    border-radius: 0;
   }
 
   .activity-thumb {
     aspect-ratio: 16 / 9;
+    min-height: 0;
   }
 
   .activity-body {
