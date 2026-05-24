@@ -131,18 +131,23 @@ section:nth-of-type(3) {
 
 .profile-section {
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden は sticky の動作を妨げるため設定しない */
 }
 
-/* 写真を全画面に敷き詰める */
+/* 画像を sticky で固定：セクション内にいる間は常に画面上部に張り付く */
 .profile-bg {
-  position: absolute;
-  inset: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  /* -100vh で次の要素（テキスト）を bg の上に重ねる */
+  margin-bottom: -100vh;
+  overflow: hidden;
   z-index: 0;
 }
 
 .profile-bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -150,41 +155,43 @@ section:nth-of-type(3) {
   display: block;
 }
 
-/* 左・上からの黒グラデーション */
+/* 左・上からの黒グラデーション（少し濃いめ） */
 .profile-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right,  rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.60) 40%, rgba(0,0,0,0.20) 70%, rgba(0,0,0,0) 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 70%);
+    linear-gradient(to right,  rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.38) 68%, rgba(0,0,0,0.12) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.10) 100%);
 }
 
-/* テキストを左寄せ・縦中央に配置 */
+/* テキストは通常フローでスクロール。z-index で bg の上に重なる。
+   margin-top: 100vh により、最初は画像だけ見え、
+   スクロールするとテキストが下から登場する。 */
 .profile-content {
   position: relative;
   z-index: 2;
-  padding: 100px 60px 100px 80px;
-  max-width: 600px;
+  margin-top: 100vh;          /* 画像を単体で見せる分の余白 */
+  padding: 100px 80px 180px 80px;
+  max-width: 740px;
   color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
 .profile-content h2 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  margin: 0 0 28px 0;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  margin: 0 0 36px 0;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .profile-content p {
-  font-size: clamp(0.82rem, 1.05vw, 0.97rem);
-  line-height: 2;
-  margin: 0 0 18px 0;
-  opacity: 0.92;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 2.1;
+  margin: 0 0 24px 0;
+  opacity: 0.93;
 }
 
 .profile-content p:last-child {
@@ -617,24 +624,24 @@ section:nth-of-type(3) {
   }
 
   .profile-content {
-    padding: 80px 32px;
+    padding: 80px 32px 140px 32px;
     max-width: 100%;
   }
 
   .profile-content h2 {
-    font-size: 2rem;
+    font-size: 2.4rem;
   }
 
   .profile-content p {
-    font-size: 0.9rem;
-    line-height: 1.9;
+    font-size: 1rem;
+    line-height: 2;
   }
 
-  /* モバイルはグラデーションを上・左どちらも強く */
+  /* モバイルはグラデーションを全体的に強く */
   .profile-overlay {
     background:
-      linear-gradient(to bottom, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%),
-      linear-gradient(to right,  rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0) 100%);
+      linear-gradient(to right,  rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.30) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.40) 50%, rgba(0,0,0,0.18) 100%);
   }
 }
 
@@ -645,16 +652,16 @@ section:nth-of-type(3) {
   }
 
   .profile-content {
-    padding: 64px 24px;
+    padding: 60px 20px 100px 20px;
   }
 
   .profile-content h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .profile-content p {
-    font-size: 0.85rem;
-    line-height: 1.85;
+    font-size: 0.95rem;
+    line-height: 2;
   }
 
   .display-none {
