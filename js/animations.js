@@ -73,59 +73,67 @@ if (workContainer && scrollRight && scrollLeft) {
 }
 
 // ===================================
-// Magazine Modal
+// モーダル制御
 // ===================================
 const magazineBtn = document.querySelector('[data-modal="magazine"]');
-const magazineModal = document.getElementById('magazine-modal');
 const podcastBtn = document.querySelector('[data-modal="podcast"]');
+const magazineModal = document.getElementById('magazine-modal');
 const podcastModal = document.getElementById('podcast-modal');
-const modalClose = document.querySelectorAll('.modal-close');
 
-function setupModal(btn, modal) {
-  if (!btn || !modal) return;
-
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    modal.style.display = 'flex';
+function openModal(modal) {
+  if (modal) {
+    modal.classList.add('modal--active');
     document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeModal(modal) {
+  if (modal) {
+    modal.classList.remove('modal--active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// マガジンボタンクリック
+if (magazineBtn) {
+  magazineBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(magazineModal);
   });
 }
 
-function setupModalClose(modal) {
-  if (!modal) return;
+// ポッドキャストボタンクリック
+if (podcastBtn) {
+  podcastBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openModal(podcastModal);
+  });
+}
 
-  const closeBtn = modal.querySelector('.modal-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
+// 閉じるボタン
+document.querySelectorAll('.modal-close').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const modal = btn.closest('.modal');
+    closeModal(modal);
+  });
+});
+
+// モーダル背景クリック
+[magazineModal, podcastModal].forEach(modal => {
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
     });
   }
+});
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  });
-}
-
-setupModal(magazineBtn, magazineModal);
-setupModal(podcastBtn, podcastModal);
-setupModalClose(magazineModal);
-setupModalClose(podcastModal);
-
+// ESCキー
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    if (magazineModal?.style.display === 'flex') {
-      magazineModal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-    if (podcastModal?.style.display === 'flex') {
-      podcastModal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
+    closeModal(magazineModal);
+    closeModal(podcastModal);
   }
 });

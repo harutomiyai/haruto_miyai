@@ -541,7 +541,7 @@ section:nth-of-type(3) {
 }
 
 /* ===================================
-   モーダル（全画面）
+   モーダル（全画面スライドイン）
 =================================== */
 .modal {
   position: fixed;
@@ -552,9 +552,23 @@ section:nth-of-type(3) {
   background: var(--color-secondary);
   z-index: 999;
   overflow: hidden;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
+}
+
+.modal.modal--active {
+  display: flex;
+  animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .modal-content {
