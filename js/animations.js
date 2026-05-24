@@ -30,19 +30,75 @@ const magazineBtn = document.querySelector('[data-modal="magazine"]');
 const podcastBtn = document.querySelector('[data-modal="podcast"]');
 const magazineModal = document.getElementById('magazine-modal');
 const podcastModal = document.getElementById('podcast-modal');
+const modalCloseTimers = new WeakMap();
 
-function openModal(modal) {
-  if (modal) {
-    modal.classList.add('modal--active');
-    document.body.style.overflow = 'hidden';
+function resetModalScroll(modal) {
+  modal.scrollTop = 0;
+  const scrollArea = modal.querySelector('.modal-scroll');
+  if (scrollArea) {
+    scrollArea.scrollTop = 0;
   }
 }
 
-function closeModal(modal) {
-  if (modal) {
-    modal.classList.remove('modal--active');
+function clearModalCloseTimer(modal) {
+  const timer = modalCloseTimers.get(modal);
+  if (timer) {
+    window.clearTimeout(timer);
+    modalCloseTimers.delete(modal);
+  }
+}
+
+function releaseBodyScrollIfReady() {
+  const visibleModal = document.querySelector('.modal.modal--active, .modal.modal--closing');
+  if (!visibleModal) {
     document.body.style.overflow = '';
   }
+}
+
+function openModal(modal) {
+  if (!modal) {
+    return;
+  }
+
+  clearModalCloseTimer(modal);
+  modal.classList.remove('modal--closing');
+  resetModalScroll(modal);
+  modal.classList.add('modal--active');
+  resetModalScroll(modal);
+  window.requestAnimationFrame(() => resetModalScroll(modal));
+  window.setTimeout(() => resetModalScroll(modal), 80);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modal) {
+  if (!modal || !modal.classList.contains('modal--active') || modal.classList.contains('modal--closing')) {
+    return;
+  }
+
+  const modalContent = modal.querySelector('.modal-content');
+
+  function finishClose() {
+    clearModalCloseTimer(modal);
+    modal.classList.remove('modal--active', 'modal--closing');
+    resetModalScroll(modal);
+    releaseBodyScrollIfReady();
+  }
+
+  modal.classList.add('modal--closing');
+
+  if (!modalContent) {
+    finishClose();
+    return;
+  }
+
+  const fallbackTimer = window.setTimeout(finishClose, 520);
+  modalCloseTimers.set(modal, fallbackTimer);
+
+  modalContent.addEventListener('animationend', (event) => {
+    if (event.target === modalContent) {
+      finishClose();
+    }
+  }, { once: true });
 }
 
 // マガジンボタンクリック
