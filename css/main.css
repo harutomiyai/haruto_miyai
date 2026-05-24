@@ -123,52 +123,72 @@ section:nth-of-type(2) p {
 }
 
 /* ===================================
-   Section 3 — 自己紹介プロフィール
+   Section 3 — 自己紹介プロフィール（全画面）
 =================================== */
 section:nth-of-type(3) {
   z-index: 4;
-  background: hsl(0 0% 100%);
-  color: hsl(0 0% 0%);
 }
 
-section:nth-of-type(3) h2 {
-  padding-top: 30px;
-  margin: 0;
+.profile-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.main-contents {
+/* 写真を全画面に敷き詰める */
+.profile-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.profile-bg img {
   width: 100%;
-  height: auto;
-  border-bottom: 1px solid var(--color-light);
-}
-
-.self-introduction {
-  background-color: var(--color-primary);
-  padding: 10% 0 10% 100px;
-}
-
-.self-box {
-  display: flex;
-  background-color: var(--color-primary);
-  padding: var(--spacing-lg);
-}
-
-.self-box img {
-  width: 500px;
-  height: auto;
-  border-radius: var(--border-radius);
-  filter: grayscale(100%);
-}
-
-.self-text {
-  color: var(--color-secondary);
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
-  padding-left: var(--spacing-lg);
-  padding-top: 10%;
 }
 
-.self-text h2 {
-  font-size: 50px;
+/* 左・上からの黒グラデーション */
+.profile-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,  rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.60) 40%, rgba(0,0,0,0.20) 70%, rgba(0,0,0,0) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 70%);
+}
+
+/* テキストを左寄せ・縦中央に配置 */
+.profile-content {
+  position: relative;
+  z-index: 2;
+  padding: 100px 60px 100px 80px;
+  max-width: 600px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.profile-content h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin: 0 0 28px 0;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.profile-content p {
+  font-size: clamp(0.82rem, 1.05vw, 0.97rem);
+  line-height: 2;
+  margin: 0 0 18px 0;
+  opacity: 0.92;
+}
+
+.profile-content p:last-child {
+  margin-bottom: 0;
 }
 
 /* ===================================
@@ -407,128 +427,6 @@ section:nth-of-type(3) h2 {
 }
 
 /* ===================================
-   NOTE セクション — editorial magazine style
-=================================== */
-.rss-section {
-  background-color: #f5f4f0;
-  padding-bottom: 80px;
-  border-top: 1px solid #e0ddd6;
-}
-
-.rss-loading {
-  text-align: center;
-  padding: var(--spacing-lg);
-  color: var(--color-muted);
-  font-size: 14px;
-}
-
-/* 3カラム グリッドレイアウト */
-.note-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  padding: 0 10%;
-  max-width: 1400px;
-  margin: 0 auto;
-  border-top: 2px solid #1a1a1a;
-  border-left: 2px solid #1a1a1a;
-}
-
-/* 各記事カード — エディトリアル スタイル */
-.note-card-item {
-  border-radius: 0 !important;
-  border: none !important;
-  border-right: 2px solid #1a1a1a !important;
-  border-bottom: 2px solid #1a1a1a !important;
-  box-shadow: none !important;
-  background: #f5f4f0;
-  transition: background-color var(--transition-speed) ease;
-  display: block;
-}
-
-.note-card-item:hover,
-.note-card-item:focus {
-  transform: none !important;
-  box-shadow: none !important;
-  background: #fffffe;
-}
-
-/* サムネイル */
-.note-card-item .activity-thumb {
-  border-radius: 0;
-  aspect-ratio: 3 / 2;
-  background: #e2ded6;
-  border-bottom: 2px solid #1a1a1a;
-}
-
-/* プラットフォームバッジは NOTE セクションでは非表示 */
-.note-card-item .activity-platform {
-  display: none;
-}
-
-/* カード本文エリア */
-.note-card-item .activity-body {
-  padding: 20px 24px 28px;
-}
-
-/* 記事タイトル */
-.note-card-item .activity-body h3 {
-  font-size: 15px;
-  line-height: 1.75;
-  color: #111;
-  margin: 8px 0 10px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  white-space: normal;
-}
-
-/* 記事カードの日付 */
-.note-date {
-  font-size: 11px;
-  color: #888;
-  letter-spacing: 0.07em;
-  margin: 0 0 4px;
-  font-weight: 500;
-}
-
-/* 記事の概要（2行でクランプ） */
-.note-excerpt {
-  font-size: 13px;
-  line-height: 1.85;
-  color: #555;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* 「全ての記事を見る」ボタン */
-.note-view-all {
-  text-align: center;
-  margin-top: var(--spacing-md);
-}
-
-.note-view-all-link {
-  display: inline-block;
-  padding: 13px 48px;
-  border: 1.5px solid #1a1a1a;
-  border-radius: 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #1a1a1a;
-  transition: all var(--transition-speed) ease;
-}
-
-.note-view-all-link:hover,
-.note-view-all-link:focus {
-  background: #1a1a1a;
-  color: #f5f4f0;
-}
-
-/* ===================================
    SNS / Contact セクション
 =================================== */
 .contact-section {
@@ -699,11 +597,6 @@ section:nth-of-type(3) h2 {
     padding: 0 var(--spacing-md);
   }
 
-  /* NOTE グリッド: タブレットは2カラム */
-  .note-grid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0 var(--spacing-md);
-  }
 }
 
 /* タブレット以下（max-width: 768px） */
@@ -723,33 +616,25 @@ section:nth-of-type(3) h2 {
     white-space: nowrap;
   }
 
-  .self-introduction {
-    padding: 5% 0;
+  .profile-content {
+    padding: 80px 32px;
+    max-width: 100%;
   }
 
-  .self-box {
-    flex-direction: column;
-    padding: 0;
+  .profile-content h2 {
+    font-size: 2rem;
   }
 
-  .self-box img {
-    width: 100%;
-    height: auto;
+  .profile-content p {
+    font-size: 0.9rem;
+    line-height: 1.9;
   }
 
-  .self-text {
-    padding-left: 0;
-    padding-top: 20px;
-    text-align: center;
-  }
-
-  .self-text h2 {
-    font-size: 30px;
-  }
-
-  .self-text p {
-    font-size: 16px;
-    word-break: break-all;
+  /* モバイルはグラデーションを上・左どちらも強く */
+  .profile-overlay {
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%),
+      linear-gradient(to right,  rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0) 100%);
   }
 }
 
@@ -759,24 +644,17 @@ section:nth-of-type(3) h2 {
     font-size: 55px;
   }
 
-  section:nth-of-type(3) h2 {
-    padding: 0 0 0 40px;
-    text-align: left;
+  .profile-content {
+    padding: 64px 24px;
   }
 
-  .self-text p {
-    text-align: left;
-    padding: 0 40px;
-    font-size: 15px;
-    font-weight: normal;
+  .profile-content h2 {
+    font-size: 1.8rem;
   }
 
-  .self-box img {
-    border-radius: 0;
-  }
-
-  .self-text h2 {
-    font-size: 50px;
+  .profile-content p {
+    font-size: 0.85rem;
+    line-height: 1.85;
   }
 
   .display-none {
@@ -795,18 +673,6 @@ section:nth-of-type(3) h2 {
 
   .activity-body p {
     font-size: 13px;
-  }
-
-  /* NOTE グリッド: スマホは1カラム */
-  .note-grid {
-    grid-template-columns: 1fr;
-    padding: 0;
-    border-left: none;
-    border-top: 2px solid #1a1a1a;
-  }
-
-  .note-card-item {
-    border-right: none !important;
   }
 
   .footer {

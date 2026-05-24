@@ -95,34 +95,31 @@
     </section>
 
     <!-- ==============================
-         Section 3: 自己紹介
+         Section 3: 自己紹介（全画面プロフィール）
     ============================== -->
-    <section>
-      <div class="main-contents">
-        <div class="self-introduction">
-          <div class="self-box">
-            <img src="assets/images/profile.jpg" alt="宮井陽音のプロフィール画像" />
-            <div class="self-text">
-              <p class="display-none">宮井陽音</p>
-              <h2>Haruto Miyai</h2>
-              <p>
-                2007年、大阪生まれ。N高等学校3年生。デザイン、プログラミングを軸に活動を拡大。<br />
-                ポリシーは、経歴ではなく、『今』を大切にする。
-              </p>
-              <p>
-                中学時に長野県で山村留学を2年間体験する。自然体験、文化体験を通して価値観が変わる。
-              </p>
-              <p>
-                学校では「教育」「アクティブラーニング」などの
-                新たな教育方法に共感し、教職員と共に集会を実施。
-              </p>
-              <p>
-                中学3年生で地元大阪に戻り、教育の現場を学生から発信するnoteを開設。
-                教育に対する発信、イベントに多数参加、企画する。
-              </p>
-            </div>
-          </div>
-        </div>
+    <section class="profile-section">
+      <div class="profile-bg">
+        <img src="assets/images/0DCF802A-C503-4C13-9081-9D1F9B3C18CD.jpg" alt="宮井陽音のプロフィール画像" />
+        <div class="profile-overlay"></div>
+      </div>
+      <div class="profile-content">
+        <p class="display-none">宮井陽音</p>
+        <h2>Haruto Miyai</h2>
+        <p>
+          2007年、大阪生まれ。Co-Innovation University 1期生。N高等学校でデザイン、プログラミング、プレゼンテーションに関心を広げ、現在は生成AIやテクノロジーを活用しながら、教育、地域、組織づくりについて実践的に学んでいる。
+        </p>
+        <p>
+          中学時代には、長野県で2年間の山村留学を経験。自然体験や地域での暮らし、異年齢の集団生活を通して、自分の価値観が大きく変わった。そこで教育や学びのあり方に関心を持ち、教職員とともに集会の企画・運営にも関わる。
+        </p>
+        <p>
+          中学3年生で地元大阪に戻った後、教育の現場を学生の視点から発信するためにnoteを開設。教育イベントへの参加や企画を重ねながら、「学びは誰かに与えられるものではなく、自分で問いを立て、動きながらつくっていくものだ」と考えるようになる。
+        </p>
+        <p>
+          N高等学校では、学校生活の中にある「めんどくさい」を解決するため、仲間とともに出席フォーム自動化ツールを開発。デザインや広報、フロントエンドを担当し、学内コンテストで評価を受けた。現在も、ツール開発や発信活動を通して、学びの環境そのものをどう更新できるかを探っている。
+        </p>
+        <p>
+          ポリシーは、経歴を積み上げることではなく、「今、何を問い、どう動いているか」を大切にすること。過去の経験を肩書きとして語るのではなく、今の実践にどうつなげるかを考え続けている。
+        </p>
       </div>
     </section>
 
@@ -136,7 +133,7 @@
 
         <a href="#" class="activity-card">
           <div class="activity-thumb">
-            <!-- 画像はここに <img src="..." alt="..."> で追加 -->
+            <img src="assets/images/%E5%95%8F%E3%81%84%E3%81%A8%E3%80%81%E5%AD%A6%E3%81%B3%E3%81%A8%E3%80%82.png" alt="問いと、学びと。" loading="lazy" />
           </div>
           <div class="activity-body">
             <span class="activity-platform">note</span>
@@ -147,7 +144,7 @@
 
         <a href="#" class="activity-card">
           <div class="activity-thumb">
-            <!-- 画像はここに <img src="..." alt="..."> で追加 -->
+            <img src="assets/images/%E5%95%8F%E3%81%84%E3%81%A8%E3%80%81%E5%AF%BE%E8%A9%B1%E3%81%A8%E3%80%82.png" alt="問いと、対話と。" loading="lazy" />
           </div>
           <div class="activity-body">
             <span class="activity-platform">Podcast</span>
@@ -167,17 +164,6 @@
           </div>
         </a>
 
-      </div>
-    </section>
-
-    <!-- ==============================
-         Section 5: NOTE（RSS フィード）
-         rss.js が #rss-container に記事を描画する
-    ============================== -->
-    <section class="rss-section">
-      <h2 class="grid-title">NOTE</h2>
-      <div id="rss-container">
-        <p class="rss-loading">記事を読み込み中...</p>
       </div>
     </section>
 
@@ -212,7 +198,5 @@
 
     <!-- JS: アニメーション + スクロールボタン（module = defer 相当） -->
     <script type="module" src="js/animations.js"></script>
-    <!-- JS: note RSS フィード読み込み -->
-    <script src="js/note-feed.js"></script>
   </body>
 </html>
