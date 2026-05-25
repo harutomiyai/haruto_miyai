@@ -146,6 +146,62 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ===================================
+// 初回訪問 YouTube ポップアップ
+// localStorage に 'introVideoShown' がなければ表示し、
+// 閉じたタイミングで localStorage に保存して以降は非表示にする。
+// ===================================
+(function () {
+  const STORAGE_KEY = 'introVideoShown';
+  const popup = document.getElementById('intro-video-popup');
+
+  if (!popup) return;
+
+  // すでに訪問済みなら DOM ごと削除して何もしない
+  if (localStorage.getItem(STORAGE_KEY)) {
+    popup.remove();
+    return;
+  }
+
+  // ページが落ち着いてからフェードイン（400ms 待機）
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => popup.classList.add('intro-popup--active'), 400);
+
+  let dismissed = false;
+  function dismissPopup() {
+    if (dismissed) return;
+    dismissed = true;
+
+    popup.classList.remove('intro-popup--active');
+    localStorage.setItem(STORAGE_KEY, '1');
+
+    // CSS トランジション完了後にクリーンアップ（backdrop 0.5s + inner 0.65s = 最長 0.65s）
+    setTimeout(() => {
+      const iframe = popup.querySelector('iframe');
+      if (iframe) iframe.src = '';
+      popup.remove();
+      document.body.style.overflow = '';
+    }, 700);
+  }
+
+  // 閉じるボタン
+  const closeBtn = popup.querySelector('.intro-popup__close');
+  if (closeBtn) closeBtn.addEventListener('click', dismissPopup);
+
+  // バックドロップクリック
+  const backdrop = popup.querySelector('.intro-popup__backdrop');
+  if (backdrop) backdrop.addEventListener('click', dismissPopup);
+
+  // ESC キー
+  function onKeyDown(e) {
+    if (e.key === 'Escape' && popup.isConnected) {
+      dismissPopup();
+      document.removeEventListener('keydown', onKeyDown);
+    }
+  }
+  document.addEventListener('keydown', onKeyDown);
+})();
+
+// ===================================
 // GSAP スクロールアニメーション（フォールバック）
 // animation-timeline: scroll() が使えないブラウザ向け
 // ===================================

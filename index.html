@@ -398,6 +398,31 @@
       <p class="footer">© 2026 Haruto Miyai. All rights reserved.</p>
     </footer>
 
+    <!-- ==============================
+         初回訪問 YouTube ポップアップ
+    ============================== -->
+    <div id="intro-video-popup" class="intro-popup" role="dialog" aria-modal="true" aria-label="紹介動画">
+      <div class="intro-popup__backdrop"></div>
+      <div class="intro-popup__inner">
+        <div class="intro-popup__video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/3SiUZ23PUXk?si=EUC0Z1SfS7gmM72S"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      <button class="intro-popup__close" aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="18" y1="6" x2="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
     <!-- JS: アニメーション + スクロールボタン（module = defer 相当） -->
     <script type="module" src="js/animations.js"></script>
   </body>
