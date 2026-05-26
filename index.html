@@ -251,10 +251,10 @@
               <span class="material-symbols-rounded" aria-hidden="true">mail</span>
               <span>メール</span>
             </a>
-            <a href="https://calendar.app.google/gbb2cFUpWsSfypuR7" target="_blank" rel="noopener" aria-label="1on1">
+            <button type="button" id="calendar-contact-trigger" class="contact-link-button" aria-label="CONTACT">
               <span class="material-symbols-rounded" aria-hidden="true">event</span>
-              <span>1on1</span>
-            </a>
+              <span>CONTACT</span>
+            </button>
             <a href="https://note.com/qa/haruto_miyai" target="_blank" rel="noopener" aria-label="質問箱">
               <span class="material-symbols-rounded" aria-hidden="true">help</span>
               <span>質問箱</span>
@@ -424,6 +424,18 @@
     </div>
 
     <!-- JS: アニメーション + スクロールボタン（module = defer 相当） -->
+    <script>
+      (function() {
+        var appointmentUrl = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2k-uXplHqi_sTUlPvAWzMCWjjAVPa36AdnriwRLg5qbVX_um_TiuOgQUzWmAjnhD7mWNzQSccX?gv=true';
+        var trigger = document.getElementById('calendar-contact-trigger');
+
+        if (trigger) {
+          trigger.addEventListener('click', function() {
+            window.open(appointmentUrl, '_blank', 'noopener');
+          });
+        }
+      })();
+    </script>
     <script type="module" src="js/animations.js"></script>
   </body>
 </html>

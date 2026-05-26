@@ -531,14 +531,15 @@ body > section:nth-of-type(3) {
 
 .contact-links {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: var(--spacing-md);
   margin-top: 0;
   flex-wrap: wrap;
 }
 
-.contact-links a {
+.contact-links a,
+.contact-link-button {
   width: 86px;
   display: flex;
   flex-direction: column;
@@ -554,7 +555,17 @@ body > section:nth-of-type(3) {
   transition: color var(--transition-speed) ease;
 }
 
-.contact-links a .material-symbols-rounded {
+.contact-link-button {
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--color-primary) !important;
+  font-family: inherit;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+.contact-links a .material-symbols-rounded,
+.contact-link-button .material-symbols-rounded {
   width: 58px;
   height: 58px;
   display: grid;
@@ -570,12 +581,15 @@ body > section:nth-of-type(3) {
 }
 
 .contact-links a:hover .material-symbols-rounded,
-.contact-links a:focus .material-symbols-rounded {
+.contact-links a:focus .material-symbols-rounded,
+.contact-link-button:hover .material-symbols-rounded,
+.contact-link-button:focus .material-symbols-rounded {
   background-color: rgba(0, 0, 0, 0.82);
   transform: translateY(-2px);
 }
 
-.contact-links a:focus-visible .material-symbols-rounded {
+.contact-links a:focus-visible .material-symbols-rounded,
+.contact-link-button:focus-visible .material-symbols-rounded {
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
 }
@@ -1393,12 +1407,14 @@ body > section:nth-of-type(3) {
     gap: var(--spacing-md);
   }
 
-  .contact-links a {
+  .contact-links a,
+  .contact-link-button {
     width: 82px;
     padding: 0;
   }
 
-  .contact-links a .material-symbols-rounded {
+  .contact-links a .material-symbols-rounded,
+  .contact-link-button .material-symbols-rounded {
     width: 54px;
     height: 54px;
     font-size: 25px;
@@ -1581,13 +1597,15 @@ body > section:nth-of-type(3) {
     gap: var(--spacing-sm);
   }
 
-  .contact-links a {
+  .contact-links a,
+  .contact-link-button {
     width: 72px;
     padding: 0;
     font-size: 13px;
   }
 
-  .contact-links a .material-symbols-rounded {
+  .contact-links a .material-symbols-rounded,
+  .contact-link-button .material-symbols-rounded {
     width: 50px;
     height: 50px;
     font-size: 24px;
