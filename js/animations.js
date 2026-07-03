@@ -24,128 +24,6 @@ if (workContainer && scrollRight && scrollLeft) {
 }
 
 // ===================================
-// モーダル制御
-// ===================================
-const magazineBtn = document.querySelector('[data-modal="magazine"]');
-const podcastBtn = document.querySelector('[data-modal="podcast"]');
-const magazineModal = document.getElementById('magazine-modal');
-const podcastModal = document.getElementById('podcast-modal');
-const modalCloseTimers = new WeakMap();
-
-function resetModalScroll(modal) {
-  modal.scrollTop = 0;
-  const scrollArea = modal.querySelector('.modal-scroll');
-  if (scrollArea) {
-    scrollArea.scrollTop = 0;
-  }
-}
-
-function clearModalCloseTimer(modal) {
-  const timer = modalCloseTimers.get(modal);
-  if (timer) {
-    window.clearTimeout(timer);
-    modalCloseTimers.delete(modal);
-  }
-}
-
-function releaseBodyScrollIfReady() {
-  const visibleModal = document.querySelector('.modal.modal--active, .modal.modal--closing');
-  if (!visibleModal) {
-    document.body.style.overflow = '';
-  }
-}
-
-function openModal(modal) {
-  if (!modal) {
-    return;
-  }
-
-  clearModalCloseTimer(modal);
-  modal.classList.remove('modal--closing');
-  resetModalScroll(modal);
-  modal.classList.add('modal--active');
-  resetModalScroll(modal);
-  window.requestAnimationFrame(() => resetModalScroll(modal));
-  window.setTimeout(() => resetModalScroll(modal), 80);
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal(modal) {
-  if (!modal || !modal.classList.contains('modal--active') || modal.classList.contains('modal--closing')) {
-    return;
-  }
-
-  const modalContent = modal.querySelector('.modal-content');
-
-  function finishClose() {
-    clearModalCloseTimer(modal);
-    modal.classList.remove('modal--active', 'modal--closing');
-    resetModalScroll(modal);
-    releaseBodyScrollIfReady();
-  }
-
-  modal.classList.add('modal--closing');
-
-  if (!modalContent) {
-    finishClose();
-    return;
-  }
-
-  const fallbackTimer = window.setTimeout(finishClose, 520);
-  modalCloseTimers.set(modal, fallbackTimer);
-
-  modalContent.addEventListener('animationend', (event) => {
-    if (event.target === modalContent) {
-      finishClose();
-    }
-  }, { once: true });
-}
-
-// マガジンボタンクリック
-if (magazineBtn) {
-  magazineBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal(magazineModal);
-  });
-}
-
-// ポッドキャストボタンクリック
-if (podcastBtn) {
-  podcastBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal(podcastModal);
-  });
-}
-
-// 閉じるボタン
-document.querySelectorAll('.modal-close').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const modal = btn.closest('.modal');
-    closeModal(modal);
-  });
-});
-
-// モーダル背景クリック
-[magazineModal, podcastModal].forEach(modal => {
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal(modal);
-      }
-    });
-  }
-});
-
-// ESCキー
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeModal(magazineModal);
-    closeModal(podcastModal);
-  }
-});
-
-// ===================================
 // 初回訪問 YouTube ポップアップ
 // localStorage に 'introVideoShown' がなければ表示し、
 // 閉じたタイミングで localStorage に保存して以降は非表示にする。
@@ -264,3 +142,40 @@ async function initScrollAnimationFallback() {
 }
 
 initScrollAnimationFallback();
+
+// ===================================
+// WORK セクション — 縦スクロールで横に流れるギャラリー
+// sticky コンテナを画面に固定し、セクション内の縦スクロール量を
+// トラックの translateX に変換する。横移動が終わると通常の縦スクロールに戻る。
+// ===================================
+const worksSection = document.querySelector('.works-section');
+const worksTrack   = document.querySelector('.works-track');
+
+if (worksSection && worksTrack) {
+  // JS有効時のみ transform 方式に切り替え（無効時は overflow-x: auto のまま）
+  worksSection.classList.add('works-horizontal');
+
+  let worksMaxX = 0;
+
+  function scrollWorks() {
+    if (worksMaxX <= 0) {
+      worksTrack.style.transform = '';
+      return;
+    }
+    const top = worksSection.getBoundingClientRect().top;
+    const progress = Math.min(Math.max(-top / worksMaxX, 0), 1);
+    worksTrack.style.transform = `translate3d(${-progress * worksMaxX}px, 0, 0)`;
+  }
+
+  function layoutWorks() {
+    worksMaxX = Math.max(worksTrack.scrollWidth - window.innerWidth, 0);
+    // セクション高さ = 画面1枚分 + 横移動量（＝sticky が張り付く縦スクロール距離）
+    worksSection.style.height = `${window.innerHeight + worksMaxX}px`;
+    scrollWorks();
+  }
+
+  window.addEventListener('scroll', scrollWorks, { passive: true });
+  window.addEventListener('resize', layoutWorks);
+  window.addEventListener('load', layoutWorks);
+  layoutWorks();
+}
