@@ -191,162 +191,14 @@ body > section:nth-of-type(3) {
 }
 
 /* ===================================
-   WORK セクション（作品カード横スクロール）
-   カードを追加・削除するには index.html の
-   class="section2" 内の .grid-item を編集する
+   セクション見出し（CONTACT の h2 が使用）
 =================================== */
-.section2 {
-  min-height: 70vh;
-}
-
 .grid-title {
   text-align: center;
   font-size: 48px;
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
   color: var(--color-accent);
-}
-
-.grid-container {
-  display: flex;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 10%;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE / Edge */
-  transition: transform var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease;
-}
-
-.grid-container::-webkit-scrollbar {
-  display: none; /* Chrome / Safari */
-}
-
-/* カード共通スタイル（.grid-item と .grid-item-1 で共有） */
-.grid-item,
-.grid-item-1 {
-  background-color: var(--color-secondary);
-  padding: var(--spacing-sm);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--color-light);
-  min-width: 350px;
-  min-height: 300px;
-  flex-shrink: 0;
-  transition: transform var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease;
-}
-
-/* 「全ての記事を見る」カードは中央揃え */
-.grid-item-1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.grid-item:hover,
-.grid-item:focus,
-.grid-item-1:hover,
-.grid-item-1:focus {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.grid-container a {
-  flex-direction: column;
-  max-width: 400px;
-  height: auto;
-  white-space: normal;
-  overflow: hidden;
-}
-
-.grid-item img,
-.grid-item-1 img {
-  max-width: 400px;
-  height: 230px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.grid-item h3 {
-  font-size: 28px;
-  color: var(--color-accent);
-  text-align: left;
-  margin-top: var(--spacing-sm);
-}
-
-.grid-item-1 h3 {
-  font-size: 28px;
-  color: var(--color-accent);
-  text-align: center;
-  margin: 0;
-}
-
-.meta-info {
-  display: flex;
-  justify-content: flex-start;
-  gap: var(--spacing-xs);
-  margin: var(--spacing-lg) 0 0 0;
-  font-size: 14px;
-  color: var(--color-muted);
-}
-
-.meta-info .separator {
-  color: #ccc;
-}
-
-.meta-info .weekday {
-  font-weight: bold;
-}
-
-.meta-info .tag {
-  padding: 2px 6px;
-  border-radius: 12px;
-  font-size: 14px;
-  color: var(--color-muted);
-  font-weight: bold;
-}
-
-/* 左右スクロールボタン（共通） */
-.scroll-right,
-.scroll-left {
-  position: absolute;
-  top: 285px;
-  background-color: #ddd;
-  border: none;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0.5;
-  z-index: 10;
-  transition: transform var(--transition-speed) ease;
-}
-
-.scroll-right {
-  right: 20px;
-  transform: scale(1);
-}
-
-.scroll-left {
-  left: 20px;
-  transform: translateY(-50%);
-}
-
-.scroll-right img,
-.scroll-left img {
-  width: 70%;
-  height: 70%;
-  pointer-events: none; /* img クリックを親ボタンに委譲 */
-}
-
-.scroll-right:hover,
-.scroll-left:hover {
-  background-color: #888;
 }
 
 /* ===================================
@@ -520,36 +372,6 @@ body > section:nth-of-type(3) {
 }
 
 /* ===================================
-   SNS セクション（プロフィール下）
-=================================== */
-.sns-section {
-  background-color: var(--color-secondary);
-  padding: var(--spacing-lg) var(--spacing-md);
-  position: relative;
-  z-index: 5;
-}
-
-.sns-container {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 0 var(--spacing-md);
-}
-
-.sns-container h3 {
-  font-size: 18px;
-  margin-bottom: var(--spacing-md);
-  margin-top: 0;
-  font-weight: 700;
-}
-
-.sns-container p {
-  margin-bottom: var(--spacing-md);
-  color: var(--color-muted);
-  font-size: 14px;
-}
-
-/* ===================================
    THOUGHT セクション（活動に込める思い）
 =================================== */
 .thought-section {
@@ -626,19 +448,6 @@ body > section:nth-of-type(3) {
   text-align: center;
   width: 100%;
   padding: 0;
-}
-
-.contact-container--sns {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-}
-
-.contact-container h3 {
-  font-size: 18px;
-  margin-bottom: var(--spacing-md);
-  margin-top: 0;
-  font-weight: 700;
 }
 
 .contact-links {
@@ -869,28 +678,11 @@ body > section:nth-of-type(3) {
 }
 
 /* ===================================
-   ユーティリティ
-=================================== */
-.display-none {
-  display: none;
-}
-
-/* ===================================
    スクロールアニメーション
    ブラウザが animation-timeline: scroll() をサポートする場合、
-   CSS アニメーションで実装。非対応ブラウザは script.js 内の
+   CSS アニメーションで実装。非対応ブラウザは animations.js 内の
    GSAP ScrollTrigger がフォールバックとして動作。
 =================================== */
-.signature path {
-  --draw: 1.025;
-  --end:  1.025;
-  stroke-dasharray:  var(--end);
-  stroke-dashoffset: var(--draw);
-}
-
-.signature :is(.eye, .nose) {
-  fill: transparent;
-}
 
 @supports (animation-timeline: scroll()) {
   body > section {
@@ -912,53 +704,12 @@ body > section:nth-of-type(3) {
     animation-range: entry 10% entry 35%, exit 0% exit 25%;
   }
 
-  .video-wrap {
-    animation: fade-in both linear, fade-out both linear;
-    animation-timeline: --section;
-    animation-range: entry 0% entry 25%, exit 10% exit 35%;
-  }
-
-  .video-wrap::after {
-    opacity: 0;
-  }
-
-  .signature path {
-    animation: draw both linear;
-    animation-timeline: --section;
-    animation-range: entry 50% entry 80%;
-  }
-
-  .signature :is(.eye, .nose) {
-    animation: draw both linear, fill both linear;
-    animation-timeline: --section;
-  }
-
-  .signature :is(.ear, .eye) {
-    animation-range: entry 80% entry 90%;
-  }
-
-  .signature .nose {
-    animation-range: entry 90% entry 100%;
-  }
-
-  @keyframes fade {
-    to { opacity: 0; }
-  }
-
   @keyframes fade-in {
     to { opacity: var(--opacity, 0.2); }
   }
 
   @keyframes fade-out {
     to { opacity: 0; }
-  }
-
-  @keyframes draw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  @keyframes fill {
-    to { fill: currentColor; }
   }
 
   @keyframes blow-out {
@@ -1069,31 +820,6 @@ body > section:nth-of-type(3) {
     font-size: 32px;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-  }
-
-  .grid-container {
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) var(--spacing-md);
-  }
-
-  .grid-item,
-  .grid-item-1 {
-    min-width: 280px;
-    min-height: 250px;
-  }
-
-  .grid-item img,
-  .grid-item-1 img {
-    max-width: 100%;
-    height: 180px;
-  }
-
-  .grid-item h3 {
-    font-size: 20px;
-  }
-
-  .scroll-right,
-  .scroll-left {
-    display: none;
   }
 
   .contact-wrapper {
@@ -1208,39 +934,8 @@ body > section:nth-of-type(3) {
     margin-bottom: var(--spacing-md);
   }
 
-  .grid-container {
-    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-md) var(--spacing-sm);
-  }
-
-  .grid-item,
-  .grid-item-1 {
-    min-width: 100%;
-    min-height: 240px;
-    padding: var(--spacing-sm);
-  }
-
-  .grid-item img,
-  .grid-item-1 img {
-    max-width: 100%;
-    height: 160px;
-  }
-
-  .grid-item h3 {
-    font-size: 18px;
-    margin-top: 12px;
-  }
-
-  .meta-info {
-    font-size: 12px;
-    gap: 6px;
-  }
-
   .contact-wrapper {
     max-width: 100%;
-  }
-
-  .contact-container h3 {
-    font-size: 16px;
   }
 
   .contact-links {
