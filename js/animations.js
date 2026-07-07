@@ -1,29 +1,4 @@
 // ===================================
-// WORK セクション — 横スクロールボタン
-// ===================================
-const workContainer = document.querySelector('.section2 .grid-container');
-const scrollRight   = document.querySelector('.scroll-right');
-const scrollLeft    = document.querySelector('.scroll-left');
-
-if (workContainer && scrollRight && scrollLeft) {
-  function updateScrollButtons() {
-    const max = workContainer.scrollWidth - workContainer.clientWidth;
-    scrollRight.style.transform = workContainer.scrollLeft >= max - 1 ? 'scale(0)' : 'scale(1)';
-    scrollLeft.style.transform  = workContainer.scrollLeft <= 0       ? 'scale(0)' : 'scale(1)';
-  }
-
-  scrollRight.addEventListener('click', () =>
-    workContainer.scrollBy({ left:  400, behavior: 'smooth' })
-  );
-  scrollLeft.addEventListener('click', () =>
-    workContainer.scrollBy({ left: -400, behavior: 'smooth' })
-  );
-  workContainer.addEventListener('scroll', updateScrollButtons);
-
-  updateScrollButtons();
-}
-
-// ===================================
 // 初回訪問 YouTube ポップアップ
 // localStorage に 'introVideoShown' がなければ表示し、
 // 閉じたタイミングで localStorage に保存して以降は非表示にする。
