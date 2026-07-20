@@ -96,6 +96,33 @@ svg text {
   font-weight: 600;
 }
 
+/* ヒーロー名前下のスクロールキュー（さりげない下向きシェブロン）。
+   ボーダー2辺を45°回転して描く。バウンスは translate プロパティで行い、
+   rotate と干渉させない（translate → rotate の順で適用されるため下方向に動く） */
+.scroll-cue {
+  position: absolute;
+  left: calc(50% - 7px);
+  top: calc(50% + clamp(80px, 14vh, 140px));
+  width: 13px;
+  height: 13px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  opacity: 0.25;
+  animation: scroll-cue-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes scroll-cue-bob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue {
+    animation: none;
+  }
+}
+
 /* ===================================
    Section 2 — タグライン（「私のデザインは常に変化し続ける。」）
 =================================== */
@@ -208,7 +235,9 @@ body > section:nth-of-type(3) {
 /* セクション全体の高さは animations.js が
    「画面1枚分 + 横移動量」に設定する（縦スクロール→横移動の距離を確保） */
 .works-section {
-  background: #000;
+  /* セクションは「1画面分＋横移動量」の高さがあるため、
+     スクロール進行に合わせて背景が黒→白へ移り、次の白いセクションへつながる */
+  background: linear-gradient(#000, #fff);
   position: relative;
   z-index: 6;
 }
@@ -420,6 +449,93 @@ body > section:nth-of-type(3) {
 
 .thought-body p:last-child {
   margin-bottom: 0;
+}
+
+/* ===================================
+   HISTORY セクション（経歴タイムライン）
+   Thought（黒背景）の直後に置く白背景セクション。
+   ol の左に縦ライン、各 li にドットを重ねる
+=================================== */
+.history-section {
+  background-color: var(--color-secondary);
+  position: relative;
+  z-index: 6;
+  padding: clamp(80px, 12vh, 140px) var(--spacing-md);
+}
+
+.history-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.history-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: 48px;
+}
+
+.history-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.history-timeline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 3px;
+  width: 1px;
+  background-color: var(--color-light);
+}
+
+.history-item {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 48px;
+}
+
+.history-item:last-child {
+  margin-bottom: 0;
+}
+
+.history-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
+.history-year {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+.history-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.history-item p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--color-accent);
+  margin: 10px 0 0;
 }
 
 /* ===================================
@@ -702,6 +818,52 @@ body > section:nth-of-type(3) {
     animation: fade-in both linear, fade-out both linear;
     animation-timeline: --section;
     animation-range: entry 10% entry 35%, exit 0% exit 25%;
+  }
+
+  /* ヒーローのスクロールキュー: スクロール開始で早めにフェードアウト
+     （バウンスは時間ベースのまま並走させる） */
+  .scroll-cue {
+    animation: scroll-cue-bob 2.6s ease-in-out infinite, fade-out both linear;
+    animation-timeline: auto, --section;
+    animation-range: normal, contain 0% contain 18%;
+  }
+
+  /* HISTORY: 各項目はビューポート進入に合わせてフェード＆スライドイン。
+     縦ラインはリスト全体のスクロール進行に合わせて上から伸びる */
+  .history-item {
+    animation: history-item-in both ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+
+  .history-timeline {
+    view-timeline-name: --history-list;
+  }
+
+  .history-timeline::before {
+    transform-origin: top;
+    animation: history-line-draw both linear;
+    animation-timeline: --history-list;
+    animation-range: cover 0% cover 85%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue,
+    .history-item,
+    .history-timeline::before {
+      animation: none;
+    }
+  }
+
+  @keyframes history-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  @keyframes history-line-draw {
+    from { transform: scaleY(0); }
   }
 
   @keyframes fade-in {

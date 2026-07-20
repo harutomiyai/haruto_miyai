@@ -126,6 +126,8 @@
             Haruto Miyai
           </text>
         </svg>
+        <!-- スクロールキュー（CSSで描く下向きシェブロン。svg だと nth-of-type(1) svg の fixed 指定を受けるため span で実装） -->
+        <span class="scroll-cue" aria-hidden="true"></span>
       </div>
     </section>
 
@@ -267,7 +269,42 @@
     </section>
 
     <!-- ==============================
-         Section 5: THOUGHT（活動に込める思い）
+         Section 5: HISTORY（経歴タイムライン）
+    ============================== -->
+    <section class="history-section">
+      <div class="history-inner">
+        <span class="history-label">History</span>
+        <ol class="history-timeline">
+          <li class="history-item">
+            <span class="history-year">2007</span>
+            <h3 class="history-title">大阪府に生まれる</h3>
+          </li>
+          <li class="history-item">
+            <span class="history-year">2020</span>
+            <h3 class="history-title">長野県で山村留学を開始</h3>
+            <p>中学1年から2年間、自然体験や地域での暮らし、異年齢の集団生活を経験。教育や学びのあり方に関心を持ち、教職員とともに集会の企画・運営にも関わる。</p>
+          </li>
+          <li class="history-item">
+            <span class="history-year">2022</span>
+            <h3 class="history-title">大阪に戻り、noteで発信を開始</h3>
+            <p>教育の現場を学生の視点から発信するためにnoteを開設。教育イベントへの参加や企画を重ねる。</p>
+          </li>
+          <li class="history-item">
+            <span class="history-year">2023</span>
+            <h3 class="history-title">N高等学校 入学</h3>
+            <p>デザイン、プログラミング、プレゼンテーションに関心を広げる。仲間とともに出席フォーム自動化ツールを開発し、学内コンテストで評価を受ける。</p>
+          </li>
+          <li class="history-item">
+            <span class="history-year">2026</span>
+            <h3 class="history-title">Co-Innovation University 入学（1期生）</h3>
+            <p>飛騨古川を拠点に、生成AIやテクノロジーを活用しながら、教育、地域、組織づくりについて実践的に学んでいる。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==============================
+         Section 6: THOUGHT（活動に込める思い）
          文章はあとで自由に書き換えてOK
     ============================== -->
     <section class="thought-section">
@@ -283,7 +320,7 @@
     </section>
 
     <!-- ==============================
-         Section 6: CONTACT
+         Section 7: CONTACT
     ============================== -->
     <section class="contact-section" id="contact">
       <h2 class="grid-title">CONTACT</h2>

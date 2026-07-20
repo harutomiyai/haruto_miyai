@@ -111,6 +111,37 @@ async function initScrollAnimationFallback() {
           },
         });
     }
+
+    // ヒーローのスクロールキュー: スクロール開始でフェードアウト
+    const cue = document.querySelector(".scroll-cue");
+    if (cue) {
+      gsap.to(cue, {
+        opacity: 0,
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: cue.closest("section"),
+          scrub,
+          start: "top top",
+          end: "10% top",
+        },
+      });
+    }
+
+    // HISTORY セクション: 各項目をフェード＆スライドイン
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".history-item").forEach((item) => {
+        gsap.from(item, {
+          opacity: 0,
+          y: 24,
+          scrollTrigger: {
+            trigger: item,
+            scrub,
+            start: "top 92%",
+            end: "top 62%",
+          },
+        });
+      });
+    }
   } catch (error) {
     console.warn("Scroll animation fallback could not be loaded.", error);
   }
