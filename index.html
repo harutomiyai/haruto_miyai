@@ -55,7 +55,8 @@
         "https://www.instagram.com/haruto.miyai/",
         "https://note.com/haruto_miyai",
         "https://www.facebook.com/haruto.miyai/",
-        "https://youtube.com/@haruto_miyai"
+        "https://youtube.com/@haruto_miyai",
+        "https://open.spotify.com/show/0kAx1XuNna8j02xH5cegFh"
       ],
       "jobTitle": "Student, Designer and Developer",
       "birthPlace": {
@@ -300,6 +301,23 @@
             <p>飛騨古川を拠点に、生成AIやテクノロジーを活用しながら、教育、地域、組織づくりについて実践的に学んでいる。</p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <!-- ==============================
+         Section 5.5: NOTE FEED（note最新記事）
+         note RSS を rss2json.com 経由で JSON 化して取得・表示する。
+         取得失敗時は note トップへのリンクのみ表示。
+    ============================== -->
+    <section class="note-feed-section">
+      <div class="note-feed-inner">
+        <span class="note-feed-label">Latest on note</span>
+        <div id="note-feed-list" class="note-feed-list" aria-live="polite">
+          <p class="note-feed-loading">読み込み中…</p>
+        </div>
+        <a href="https://note.com/haruto_miyai" target="_blank" rel="noopener" class="note-feed-all">
+          すべての記事を見る
+        </a>
       </div>
     </section>
 

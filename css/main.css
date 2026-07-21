@@ -401,6 +401,135 @@ body > section:nth-of-type(3) {
 }
 
 /* ===================================
+   NOTE FEED セクション（note最新記事）
+   History（白背景）の直後に置く、同系統の白背景セクション。
+   薄いグレーの背景 + カード枠でセクションの境界を明確にする。
+=================================== */
+.note-feed-section {
+  background-color: var(--color-light);
+  position: relative;
+  z-index: 6;
+  padding: clamp(80px, 12vh, 140px) var(--spacing-md);
+}
+
+.note-feed-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.note-feed-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: 32px;
+}
+
+.note-feed-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.note-feed-loading {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.note-feed-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.note-feed-card:hover,
+.note-feed-card:focus {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.note-feed-card__thumb-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-light);
+  overflow: hidden;
+}
+
+.note-feed-card__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.note-feed-card__thumb-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.note-feed-card__body {
+  padding: 18px 20px 22px;
+}
+
+.note-feed-card__date {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 8px;
+}
+
+.note-feed-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 0;
+  transition: color var(--transition-speed) ease;
+}
+
+.note-feed-card:hover .note-feed-card__title,
+.note-feed-card:focus .note-feed-card__title {
+  color: var(--color-accent);
+}
+
+.note-feed-all {
+  display: inline-block;
+  margin-top: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+  transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.note-feed-all:hover,
+.note-feed-all:focus {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 720px) {
+  .note-feed-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===================================
    THOUGHT セクション（活動に込める思い）
 =================================== */
 .thought-section {

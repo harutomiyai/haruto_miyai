@@ -185,3 +185,117 @@ if (worksSection && worksTrack) {
   window.addEventListener('load', layoutWorks);
   layoutWorks();
 }
+
+// ===================================
+// NOTE FEED セクション — note RSS フィード読み込み
+//
+// note の RSS は全記事に <media:thumbnail> でアイキャッチ画像を持つが、
+// rss2json.com はこのタグを認識せず thumbnail が常に空になる。
+// そのため優先順位は次の通り：
+//   1. CORS プロキシ経由で RSS の生 XML を取得し media:thumbnail を直接読む
+//   2. 失敗したら rss2json.com 経由で取得し、本文中の最初の <img> で代替
+//   3. どちらも失敗したら note トップへのリンクのみ表示
+// ===================================
+(async function loadNoteFeed() {
+  const NOTE_USER = 'haruto_miyai';
+  const MAX_ITEMS = 3;
+  const FEED_URL = `https://note.com/${NOTE_USER}/rss`;
+
+  const list = document.getElementById('note-feed-list');
+  if (!list) return;
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function fmtDate(dateStr) {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return '';
+    return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  function firstImageFrom(html) {
+    if (!html) return '';
+    const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return match ? match[1] : '';
+  }
+
+  function renderCards(articles) {
+    list.innerHTML = articles.slice(0, MAX_ITEMS).map(({ title, link, date, thumbnail }) => {
+      const thumbHtml = thumbnail
+        ? `<img class="note-feed-card__thumb" src="${escHtml(thumbnail)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span class=&quot;note-feed-card__thumb-fallback&quot;>note</span>'">`
+        : `<span class="note-feed-card__thumb-fallback">note</span>`;
+
+      return `
+        <a href="${escHtml(link)}" target="_blank" rel="noopener" class="note-feed-card">
+          <div class="note-feed-card__thumb-wrap">${thumbHtml}</div>
+          <div class="note-feed-card__body">
+            <span class="note-feed-card__date">${escHtml(date)}</span>
+            <h3 class="note-feed-card__title">${escHtml(title)}</h3>
+          </div>
+        </a>`;
+    }).join('');
+  }
+
+  // 方式1: CORS プロキシ経由で RSS 生 XML を取得し media:thumbnail を直接読む
+  async function loadViaRawXml() {
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED_URL)}`;
+    const res = await fetch(proxyUrl);
+    const xmlText = await res.text();
+    const doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+
+    if (doc.querySelector('parsererror')) throw new Error('xml parse error');
+
+    const items = Array.from(doc.querySelectorAll('item'));
+    if (!items.length) throw new Error('no items in feed');
+
+    return items.map((item) => {
+      const thumbnail = item.getElementsByTagNameNS('*', 'thumbnail')[0]?.textContent.trim() || '';
+      return {
+        title: item.querySelector('title')?.textContent || '',
+        link: item.querySelector('link')?.textContent || FEED_URL,
+        date: fmtDate(item.querySelector('pubDate')?.textContent),
+        thumbnail: thumbnail || firstImageFrom(item.querySelector('description')?.textContent),
+      };
+    });
+  }
+
+  // 方式2: rss2json.com 経由（media:thumbnail は拾えないため本文中の <img> で代替）
+  async function loadViaRss2Json() {
+    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(FEED_URL)}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+
+    if (data.status !== 'ok' || !Array.isArray(data.items) || !data.items.length) {
+      throw new Error('invalid response');
+    }
+
+    return data.items.map((item) => ({
+      title: item.title || '',
+      link: item.link || FEED_URL,
+      date: fmtDate(item.pubDate),
+      thumbnail: item.thumbnail || (item.enclosure && item.enclosure.link) || firstImageFrom(item.description),
+    }));
+  }
+
+  try {
+    let articles;
+    try {
+      articles = await loadViaRawXml();
+    } catch (error) {
+      console.warn('note feed: raw XML fetch failed, falling back to rss2json.', error);
+      articles = await loadViaRss2Json();
+    }
+    renderCards(articles);
+  } catch (error) {
+    console.warn('note feed could not be loaded.', error);
+    list.innerHTML = `
+      <p class="note-feed-loading">
+        <a href="https://note.com/${NOTE_USER}" target="_blank" rel="noopener">noteで記事を読む</a>
+      </p>`;
+  }
+})();
